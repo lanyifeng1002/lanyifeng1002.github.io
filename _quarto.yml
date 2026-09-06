@@ -1,0 +1,20 @@
+project:
+  type: website
+
+website:
+  title: "Yifeng Lan"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: research.qmd
+        text: Research
+      - href: blog.qmd
+        text: Blog
+      - href: cv.qmd
+        text: CV
+
+format:
+  html:
+    theme: cosmo
+    toc: true

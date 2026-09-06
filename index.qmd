@@ -1,0 +1,32 @@
+---
+title: "Yifeng Lan"
+toc: false
+---
+
+I am a graduate student in statistics with research interests in statistical machine learning, multi-task and transfer learning, representation learning, and functional data analysis.
+
+My current research focuses on statistical methodology for learning from heterogeneous and related data sources, with particular interests in representation learning, functional data, and robust knowledge transfer.
+
+## Research Interests
+
+- Statistical Machine Learning
+- Multi-task and Transfer Learning
+- Representation Learning
+- Functional and High-dimensional Data Analysis
+- Statistical Foundations of Modern AI
+
+## Selected Research
+
+### Functional Multi-task Learning with Similar Representations
+
+*Manuscript in preparation, 2026.*
+
+We study multi-task functional linear regression in which task-specific slope functions admit similar, but not necessarily identical, low-dimensional representations. Our goal is to understand when information sharing across tasks improves estimation while remaining robust to heterogeneous or outlying tasks.
+
+[Research project →](research.qmd)
+
+## Contact
+
+Email: lyf1327401857@163.com
+
+GitHub: [lanyifeng1002](https://github.com/lanyifeng1002)

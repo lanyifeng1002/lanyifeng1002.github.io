@@ -1,0 +1,254 @@
+---
+title: "Learning Across Functional Regression Tasks with Similar Representations"
+description: "Prediction geometry, representation heterogeneity, and robust multi-task learning for functional data."
+author: "Yifeng Lan"
+date: "2026-08-28"
+categories:
+  - Functional Data Analysis
+  - Multi-task Learning
+  - Representation Learning
+  - Statistical Machine Learning
+toc: true
+---
+
+## The question
+
+Functional linear regression is a natural tool when predictors are curves
+rather than finite-dimensional vectors.
+
+> **When can multiple functional regression tasks borrow strength from one
+> another without forcing their underlying representations to be identical?**
+
+## Why exact sharing can be too restrictive
+
+For task \(m\), we consider
+
+$$
+\boldsymbol\beta^{*(m)}(t)
+=
+\boldsymbol A^{*(m)}
+\boldsymbol\alpha^{*(m)}(t).
+$$
+
+Classical shared-representation models impose
+
+$$
+\boldsymbol A^{*(1)}
+=
+\cdots
+=
+\boldsymbol A^{*(M)}.
+$$
+
+We instead allow the representations to be similar but heterogeneous.
+
+## Functional regression changes the geometry
+
+For a perturbation \(\boldsymbol f\), define the prediction seminorm
+
+$$
+\|\boldsymbol f\|_{X^{(m)}}^2
+=
+\left\langle
+\boldsymbol f,
+\mathcal C^{(m)}
+\boldsymbol f
+\right\rangle.
+$$
+
+If
+
+$$
+\mathcal C\phi_k=\mu_k\phi_k,
+\qquad
+f=\sum_{k\ge1}c_k\phi_k,
+$$
+
+then
+
+$$
+\|f\|_X^2
+=
+\sum_{k\ge1}\mu_kc_k^2,
+$$
+
+whereas
+
+$$
+\|f\|_{L_2}^2
+=
+\sum_{k\ge1}c_k^2.
+$$
+
+Thus, two perturbations that are equally large in \(L_2\) geometry may
+have very different predictive consequences.
+
+## Statistical formulation
+
+For \(m\in[M]\),
+
+$$
+Y_i^{(m)}
+=
+\sum_{j=1}^p
+\int_{\mathcal T}
+X_{ij}^{(m)}(t)
+\beta_j^{*(m)}(t)\,dt
++
+\varepsilon_i^{(m)}.
+$$
+
+We assume
+
+$$
+\boldsymbol\beta^{*(m)}(t)
+=
+\boldsymbol A^{*(m)}
+\boldsymbol\alpha^{*(m)}(t),
+\qquad
+\boldsymbol A^{*(m)}\in\mathbb O_{p,r}.
+$$
+
+## Similar rather than identical representations
+
+There exists a central representation
+\(\overline{\boldsymbol A}\) such that
+
+$$
+\left\|
+P_{\boldsymbol A^{*(m)}}
+-
+P_{\overline{\boldsymbol A}}
+\right\|_{\mathrm{op}}
+\le h
+$$
+
+for informative tasks \(m\in\mathcal S\).
+
+The case \(h=0\) corresponds to exact representation sharing.
+
+## Two ways to learn across tasks
+
+### Penalized empirical risk minimization
+
+The first approach combines
+
+$$
+\text{prediction loss}
++
+\text{functional roughness}
++
+\text{representation similarity}.
+$$
+
+A task-specific refitting step subsequently adapts the joint estimator to
+each individual task.
+
+### Spectral aggregation
+
+The second approach follows
+
+$$
+\text{single-task pilots}
+\rightarrow
+\text{robust aggregation}
+\rightarrow
+\text{SVD}
+\rightarrow
+\text{central representation}
+\rightarrow
+\text{task-specific refitting}.
+$$
+
+## What does the theory tell us?
+
+Suppressing constants and logarithmic factors, the estimation error has
+the schematic form
+
+$$
+\text{error}
+\lesssim
+\underbrace{
+\sigma\sqrt{\frac{rp}{n|\mathcal S|}}
+}_{\text{cross-task gain}}
++
+\underbrace{
+\sigma\sqrt{\frac{r\,d_K(\eta)}{n}}
+}_{\text{functional estimation}}
++
+\underbrace{
+K^{-\tau}
++
+\eta^{1/2}K^{(d-\nu)_+}
+}_{\text{approximation and smoothing}}
++
+\underbrace{
+\sqrt r\,h
+}_{\text{heterogeneity}}
++
+\underbrace{
+\text{contamination}
+}_{\epsilon}.
+$$
+
+The exact theorem contains task-specific signal-strength terms and
+additional logarithmic factors; the display above is intended only to
+highlight the statistical structure.
+
+A key safeguard is that the final estimator is controlled by
+
+$$
+\text{multi-task error}
+\wedge
+\text{single-task error}.
+$$
+
+::: {.callout-note}
+## A central design principle
+
+Borrow information when tasks are compatible, but retain a single-task
+fallback when they are not.
+:::
+
+## Why prediction geometry matters in refitting
+
+Coefficient-space distance such as
+
+$$
+\|B-B_0\|_F
+$$
+
+does not directly reflect how a perturbation affects prediction.
+
+The relevant functional geometry combines prediction and smoothness:
+
+$$
+\|\beta_B-\beta_{B_0}\|_X^2
++
+\eta\|\beta_B\|_R^2.
+$$
+
+## Numerical illustration
+
+Simulation results will be added here.
+
+## What I learned from this project
+
+This project changed how I think about multi-task learning in functional
+models in several ways.
+
+First, transferring finite-dimensional multi-task ideas to functional data
+is not merely a matter of replacing vectors by basis coefficients. The
+covariance operator changes the relevant statistical geometry.
+
+Second, representation similarity alone is not sufficient for successful
+multi-task learning. The tasks must also be sufficiently diverse to reveal
+the latent representation.
+
+Third, robustness and adaptivity are closely related design goals. A useful
+multi-task procedure should exploit cross-task structure when it is present,
+while retaining a reasonable fallback when the structure weakens.
+
+Finally, the analysis requires functional approximation, empirical
+prediction geometry, representation perturbation, and cross-task
+concentration to work together.
