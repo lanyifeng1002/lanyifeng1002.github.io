@@ -1,5 +1,10 @@
 project:
   type: website
+  render:
+    - index.qmd
+    - research.qmd
+    - blog.qmd
+    - posts/**/*.qmd
 
 website:
   title: "Yifeng Lan"
@@ -11,8 +16,6 @@ website:
         text: Research
       - href: blog.qmd
         text: Blog
-      - href: cv.qmd
-        text: CV
 
 format:
   html:

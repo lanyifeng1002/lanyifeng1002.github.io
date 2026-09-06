@@ -1,8 +1,6 @@
 ---
-title: "Research Notes"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
+title: "Blog"
+toc: false
 ---
+
+## [Functional Multi-Task Learning with Similar Representations](posts/functional-mtl/)

@@ -1,7 +1,40 @@
 ---
 title: "Research"
+toc: false
 ---
 
-## Research
+## Research Experience
 
-Research projects will be listed here.
+### [Functional Multi-Task Learning with Similar Representations](posts/functional-mtl/)
+
+*Sept. 2024–Present*
+
+**Contribution.** This research studies how to share information across functional regression tasks with multiple functional predictors, model their task-specific coefficient functions through similar low-rank representations, while accounting for the covariance and smoothness geometry intrinsic to functional regression in estimation and refitting. This leads to a functional multi-task learning framework with theoretical guarantees, validated through simulations and real-data analysis.
+
+**Outcome.** Manuscript in preparation.
+
+### Improving the Quality and Flavor of Radish Paocai through Mixed-Strain Fermentation
+
+*Dec. 2020–Jun. 2023*
+
+**Contribution.** Curated and analyzed multi-dimensional fermentation datasets, integrating physicochemical, amino-acid, organic-acid, volatile-compound, texture, and sensory measurements to compare fermentation conditions and characterize changes in product quality and flavor.
+
+**Outcome.** Second-author article published in *Journal of Food Science* (2025).
+
+## Selected Projects
+
+### Cross-Domain Bearing Fault Diagnosis via Transfer Learning
+
+*2025*
+
+**Contribution.** Developed a cross-domain fault-diagnosis framework for transferring knowledge from labeled laboratory bearing data to scarce, unlabeled real-train data; constructed an MMD-based CNN domain-adaptation model to align source and target feature distributions and evaluated transfer performance through cross-validation and classification diagnostics.
+
+**Outcome.** National Second Prize, China Postgraduate Mathematical Contest in Modeling.
+
+### Promotion Effect Evaluation and Resource Reallocation under Periodic Demand Fluctuations
+
+*2026*
+
+**Contribution.** Analyzed promotional effectiveness under periodic consumption fluctuations on an instant-retail platform and developed a data-driven framework for evaluating promotion outcomes and reallocating limited marketing resources across customer or demand segments.
+
+**Outcome.** Outstanding Project Award (50/2000+), 6th Meituan Business Analytics Competition.

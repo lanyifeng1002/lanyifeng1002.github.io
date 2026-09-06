@@ -15,16 +15,6 @@ My current research focuses on statistical methodology for learning from heterog
 - Functional and High-dimensional Data Analysis
 - Statistical Foundations of Modern AI
 
-## Selected Research
-
-### Functional Multi-task Learning with Similar Representations
-
-*Manuscript in preparation, 2026.*
-
-We study multi-task functional linear regression in which task-specific slope functions admit similar, but not necessarily identical, low-dimensional representations. Our goal is to understand when information sharing across tasks improves estimation while remaining robust to heterogeneous or outlying tasks.
-
-[Research project →](research.qmd)
-
 ## Contact
 
 Email: lyf1327401857@163.com
