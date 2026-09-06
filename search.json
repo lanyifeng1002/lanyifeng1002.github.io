@@ -1,17 +1,87 @@
 [
   {
+    "objectID": "posts/functional-mtl/index.html",
+    "href": "posts/functional-mtl/index.html",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "",
+    "text": "We study multi-task scalar-on-multiple-function-regression in which several related regression tasks are available, but their underlying structures need not be identical. Within each informative task, the vector of slope functions is assumed to admit a low dimensional representation, while these representations are allowed to vary around a common subspace and a fraction of tasks may be unrelated. We develop two estimation procedures based respectively on penalized empirical risk minimization and robust spectral aggregation. Both procedures combine representation learning across tasks with task specific refitting, with discrepancies measured through a geometry that incorporates the covariance structure of the functional predictors and smoothness regularization.\nWe establish prediction error bounds that separate the contributions of functional complexity, representation heterogeneity, task contamination, and information shared across tasks. The resulting bounds show that borrowing information across tasks improves on separate functional regression when the informative representations are sufficiently similar and contamination is limited, while the refitting step retains the single task rate when such sharing is not beneficial. The spectral procedure achieves a sharper dependence on the intrinsic representation dimension, whereas the penalized procedure is more robust to task contamination."
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#overview",
+    "href": "posts/functional-mtl/index.html#overview",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "",
+    "text": "We study multi-task scalar-on-multiple-function-regression in which several related regression tasks are available, but their underlying structures need not be identical. Within each informative task, the vector of slope functions is assumed to admit a low dimensional representation, while these representations are allowed to vary around a common subspace and a fraction of tasks may be unrelated. We develop two estimation procedures based respectively on penalized empirical risk minimization and robust spectral aggregation. Both procedures combine representation learning across tasks with task specific refitting, with discrepancies measured through a geometry that incorporates the covariance structure of the functional predictors and smoothness regularization.\nWe establish prediction error bounds that separate the contributions of functional complexity, representation heterogeneity, task contamination, and information shared across tasks. The resulting bounds show that borrowing information across tasks improves on separate functional regression when the informative representations are sufficiently similar and contamination is limited, while the refitting step retains the single task rate when such sharing is not beneficial. The spectral procedure achieves a sharper dependence on the intrinsic representation dimension, whereas the penalized procedure is more robust to task contamination."
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#motivation",
+    "href": "posts/functional-mtl/index.html#motivation",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "Motivation",
+    "text": "Motivation\nConsider a regional air-quality monitoring network in which each station records daily trajectories of pollutants and meteorological variables, such as PM2.5 and temperature. A typical goal is to predict a scalar outcome, for example the next-day pollution level or a health-risk measure, from these functional covariates. Each station then gives a scalar-on-multiple-function regression problem. Stations in the same region are related through common atmospheric transport and emission patterns, but their regression relationships may differ because of local traffic, geography, industrial activity, and meteorological conditions.\nIn all these examples, data are collected from several related populations, sites, or subjects, while each regression task itself involves multiple functional predictors. Estimating the tasks separately ignores potentially useful shared information, whereas pooling them into a single model ignores task-specific differences. This raises a basic question: how can information across related regression tasks improve the estimation of multiple functional effects without forcing the tasks to be the same?"
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#main-contributions",
+    "href": "posts/functional-mtl/index.html#main-contributions",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "Main contributions",
+    "text": "Main contributions\nTo address these issues, we make three main contributions. First, we formulate a multi-task scalar-on-multiple-function regression model in which the multiple slope functions within each task admit a low-dimensional representation. These representations are allowed to be similar rather than identical across informative tasks, while a fraction of tasks may be unrelated or contaminated.\nSecond, we develop two estimators based on penalized empirical risk minimization and robust spectral aggregation. Both methods combine representation learning with task-specific refitting, while accounting for the regularization and prediction structure of functional regression. Third, we establish prediction error bounds that characterize the effects of functional complexity, representation heterogeneity, task contamination, and cross-task information. The theory identifies regimes in which multi-task learning improves upon separate taskwise estimation while retaining a safe-net guarantee."
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#problem-setup",
+    "href": "posts/functional-mtl/index.html#problem-setup",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "Problem setup",
+    "text": "Problem setup\nConsider (M) independent regression tasks. The (m)-th task consists of (n_m) independent observations. The functional linear model for the (m)-th task is written as\n\\[\nY_i^{(m)}\n=\n\\sum_{j=1}^{p}\\int_{\\mathcal T}X_{ij}^{(m)}(t)\\beta_j^{*(m)}(t)\\,dt\n+\\varepsilon_i^{(m)},\n\\qquad i\\in[n].\n\\]\nWe assume that the (p) slope functions are linearly spanned by (r) latent slope functions with (rp). Specifically,\n\\[\n\\boldsymbol\\beta^{*(m)}(t)\n=\n\\boldsymbol A^{*(m)}\\boldsymbol\\alpha^{*(m)}(t),\n\\qquad\n\\boldsymbol A^{*(m)}\\in\\mathbb O_{p\\times r}.\n\\]\nThe matrix (A^{(m)}) characterizes the low-dimensional representation of task (m) along the coordinate directions of observed functions, while (^{(m)}) captures the temporal variation pattern of this task in the latent representation space. The matrix (A^{*(m)}) itself is not uniquely identifiable; the identifiable quantity is its column space, or equivalently the projection matrix.\nLet (S) denote the unknown set of informative tasks. The representations ({A^{*(m)}}_{mS}) are assumed to be similar to one another. We assume that there exists (h) such that\n\\[\n\\min_{\\bar{\\boldsymbol A}\\in\\mathbb O_{p\\times r}}\n\\max_{m\\in\\mathcal S}\n\\left\\|\n\\boldsymbol A^{*(m)}\\boldsymbol A^{*(m)\\top}\n-\n\\bar{\\boldsymbol A}\\bar{\\boldsymbol A}^{\\top}\n\\right\\|_{\\mathrm{op}}\n\\le h.\n\\]\nThe matrix ({A}) achieving the minimum can be understood as a “central representation”, and (h) is the similarity measure. A small (h) means the representations are more similar. The case when (h=0) reduces to the setting in which all informative tasks share exactly the same representation subspace.\nTasks belonging to (S^c) are not required to satisfy the low-dimensional representation structure. More generally, we allow their data distributions to be arbitrary. Our statistical goal is to estimate ({^{*(m)}:m}) without prior knowledge of (S). When (h) and the contamination proportion are small, we borrow information across multiple tasks to improve estimation accuracy for informative tasks; meanwhile, the estimation maintains stability under substantial task heterogeneity."
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#proposed-methods",
+    "href": "posts/functional-mtl/index.html#proposed-methods",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "Proposed methods",
+    "text": "Proposed methods\nThe first uses penalized empirical risk minimization to adaptively aggregate similar task representations while remaining robust to outlier tasks. The second uses robust spectral aggregation and is computationally more efficient.\n\nFunctional penalized empirical risk minimization\nIn Algorithm 1, Step 1 aims to learn all tasks by aggregating the data. The penalty encourages the task-specific representation subspaces to stay close to a common center, while still allowing them to differ. This form of regularization also reduces the influence of a small number of outlier tasks on the learned central representation.\nTo prevent negative transfer when the representation learned from multiple tasks is not sufficiently accurate for a particular task, Step 2 performs a task-specific biased refitting using the data from that task. This allows the estimator to move away from the Step 1 estimate when supported by the task-specific data, while retaining information learned across tasks otherwise. This refitting step therefore guards against negative transfer.\n\n\nFunctional spectral method\nWe next propose a spectral procedure as a computationally simpler alternative to the joint penalized ERM in Algorithm 1. The basic idea is to first construct task-specific pilot estimators, robustly aggregate their low-dimensional representation information through singular value decomposition (SVD), and then perform task-specific refitting within the estimated representation subspace.\nEach task is first estimated separately using the penalized functional loss, and the resulting pilot is rescaled by the empirical temporal Gram matrix before truncation. The truncation then limits the influence of unusually large pilot blocks. Step 3 applies SVD to the concatenated blocks and uses the leading (r) left singular vectors to estimate the central representation subspace. Each task is then refitted within this subspace, followed by the final task-specific refitting step."
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#numerical-evidence",
+    "href": "posts/functional-mtl/index.html#numerical-evidence",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "Numerical evidence",
+    "text": "Numerical evidence\nHard-share performs well when (h) is small, but its prediction error increases rapidly as (h) grows. This reflects the cost of imposing an exact common representation when the task representations become different. In contrast, FpERM and FSpectral increase much more slowly and remain below the Single-task benchmark across the four settings. Overall, the results support the benefit of allowing similar representations while retaining task level adaptation.\nThe prediction errors of Pooled and Hard-share increase substantially once unrelated tasks are introduced. In contrast, FpERM and FSpectral remain stable on the informative tasks and continue to improve over Single-task. They also remain close to Single-task on the contaminating tasks. This agrees with the role of the final refitting step, which limits negative transfer when a task does not conform to the learned common structure.\nWithout contamination, increasing (M) improves the methods that learn a common representation. The pattern changes when 4% of the tasks are contaminated. Hard-share deteriorates as (M) increases because more outlier tasks enter the estimation of the common representation. In contrast, FpERM and FSpectral remain stable and their mean prediction errors continue to decrease. This shows that the proposed methods can benefit from additional related tasks without becoming increasingly sensitive to a small proportion of outliers."
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#real-data-analysis",
+    "href": "posts/functional-mtl/index.html#real-data-analysis",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "Real data analysis",
+    "text": "Real data analysis\nWe apply FpERM and FSpectral to the Beijing Multi Site Air Quality data set. The 12 monitoring stations and four seasons define (M=48) tasks. For each station and day, the response is the daily mean PM2.5 concentration. The functional predictors are the 24 hourly measurements of PM10, SO2, NO2, CO, O3, temperature, pressure, dew point, rain, and wind speed.\nRelative to Single, FpERM reduces the average task RMSE by 45.0% when (r=2) and by 51.3% when (r=3). Paired block bootstrap intervals for the FpERM improvement over Single exclude zero at both ranks. The analysis therefore provides empirical evidence that representation sharing can improve functional prediction when each task has a limited sample size. It also shows that the comparison between exact and approximate sharing can depend on the representation rank."
+  },
+  {
+    "objectID": "posts/functional-mtl/index.html#conclusion",
+    "href": "posts/functional-mtl/index.html#conclusion",
+    "title": "Functional Multi-Task Learning with Similar Representations",
+    "section": "Conclusion",
+    "text": "Conclusion\nWe studied multi-task scalar-on-multiple-function regression under a similar representation structure, allowing informative tasks to have related but not identical representations and permitting task contamination. We proposed two methods based on penalized empirical risk minimization and spectral aggregation, both followed by task-specific refitting. The theoretical results characterize the effects of functional complexity, representation heterogeneity, contamination, and cross-task information, and show when multi-task learning can improve over separate taskwise estimation while retaining a safe-net guarantee."
+  },
+  {
     "objectID": "research.html",
     "href": "research.html",
     "title": "Research",
     "section": "",
-    "text": "Research projects will be listed here."
+    "text": "Sept. 2024–Present\nContribution. This research studies how to share information across functional regression tasks with multiple functional predictors, model their task-specific coefficient functions through similar low-rank representations, while accounting for the covariance and smoothness geometry intrinsic to functional regression in estimation and refitting. This leads to a functional multi-task learning framework with theoretical guarantees, validated through simulations and real-data analysis.\nOutcome. Manuscript in preparation.\n\n\n\nDec. 2020–Jun. 2023\nContribution. Curated and analyzed multi-dimensional fermentation datasets, integrating physicochemical, amino-acid, organic-acid, volatile-compound, texture, and sensory measurements to compare fermentation conditions and characterize changes in product quality and flavor.\nOutcome. Second-author article published in Journal of Food Science (2025)."
   },
   {
-    "objectID": "research.html#research",
-    "href": "research.html#research",
+    "objectID": "research.html#research-experience",
+    "href": "research.html#research-experience",
     "title": "Research",
     "section": "",
-    "text": "Research projects will be listed here."
+    "text": "Sept. 2024–Present\nContribution. This research studies how to share information across functional regression tasks with multiple functional predictors, model their task-specific coefficient functions through similar low-rank representations, while accounting for the covariance and smoothness geometry intrinsic to functional regression in estimation and refitting. This leads to a functional multi-task learning framework with theoretical guarantees, validated through simulations and real-data analysis.\nOutcome. Manuscript in preparation.\n\n\n\nDec. 2020–Jun. 2023\nContribution. Curated and analyzed multi-dimensional fermentation datasets, integrating physicochemical, amino-acid, organic-acid, volatile-compound, texture, and sensory measurements to compare fermentation conditions and characterize changes in product quality and flavor.\nOutcome. Second-author article published in Journal of Food Science (2025)."
+  },
+  {
+    "objectID": "research.html#selected-projects",
+    "href": "research.html#selected-projects",
+    "title": "Research",
+    "section": "Selected Projects",
+    "text": "Selected Projects\n\nCross-Domain Bearing Fault Diagnosis via Transfer Learning\n2025\nContribution. Developed a cross-domain fault-diagnosis framework for transferring knowledge from labeled laboratory bearing data to scarce, unlabeled real-train data; constructed an MMD-based CNN domain-adaptation model to align source and target feature distributions and evaluated transfer performance through cross-validation and classification diagnostics.\nOutcome. National Second Prize, China Postgraduate Mathematical Contest in Modeling.\n\n\nPromotion Effect Evaluation and Resource Reallocation under Periodic Demand Fluctuations\n2026\nContribution. Analyzed promotional effectiveness under periodic consumption fluctuations on an instant-retail platform and developed a data-driven framework for evaluating promotion outcomes and reallocating limited marketing resources across customer or demand segments.\nOutcome. Outstanding Project Award (50/2000+), 6th Meituan Business Analytics Competition."
   },
   {
     "objectID": "index.html",
@@ -28,115 +98,10 @@
     "text": "Research Interests\n\nStatistical Machine Learning\nMulti-task and Transfer Learning\nRepresentation Learning\nFunctional and High-dimensional Data Analysis\nStatistical Foundations of Modern AI"
   },
   {
-    "objectID": "index.html#selected-research",
-    "href": "index.html#selected-research",
-    "title": "Yifeng Lan",
-    "section": "Selected Research",
-    "text": "Selected Research\n\nFunctional Multi-task Learning with Similar Representations\nManuscript in preparation, 2026.\nWe study multi-task functional linear regression in which task-specific slope functions admit similar, but not necessarily identical, low-dimensional representations. Our goal is to understand when information sharing across tasks improves estimation while remaining robust to heterogeneous or outlying tasks.\nResearch project →"
-  },
-  {
     "objectID": "index.html#contact",
     "href": "index.html#contact",
     "title": "Yifeng Lan",
     "section": "Contact",
     "text": "Contact\nEmail: lyf1327401857@163.com\nGitHub: lanyifeng1002"
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Research Notes",
-    "section": "",
-    "text": "Learning Across Functional Regression Tasks with Similar Representations\n\n\n\nFunctional Data Analysis\n\nMulti-task Learning\n\nRepresentation Learning\n\nStatistical Machine Learning\n\n\n\nPrediction geometry, representation heterogeneity, and robust multi-task learning for functional data.\n\n\n\n\n\nAug 28, 2026\n\n\nYifeng Lan\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "cv.html",
-    "href": "cv.html",
-    "title": "CV",
-    "section": "",
-    "text": "My academic CV will be available here."
-  },
-  {
-    "objectID": "cv.html#curriculum-vitae",
-    "href": "cv.html#curriculum-vitae",
-    "title": "CV",
-    "section": "",
-    "text": "My academic CV will be available here."
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html",
-    "href": "posts/functional-mtl/index.html",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "",
-    "text": "Functional linear regression is a natural tool when predictors are curves rather than finite-dimensional vectors.\n\nWhen can multiple functional regression tasks borrow strength from one another without forcing their underlying representations to be identical?"
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#the-question",
-    "href": "posts/functional-mtl/index.html#the-question",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "",
-    "text": "Functional linear regression is a natural tool when predictors are curves rather than finite-dimensional vectors.\n\nWhen can multiple functional regression tasks borrow strength from one another without forcing their underlying representations to be identical?"
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#why-exact-sharing-can-be-too-restrictive",
-    "href": "posts/functional-mtl/index.html#why-exact-sharing-can-be-too-restrictive",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "Why exact sharing can be too restrictive",
-    "text": "Why exact sharing can be too restrictive\nFor task (m), we consider\n\\[\n\\boldsymbol\\beta^{*(m)}(t)\n=\n\\boldsymbol A^{*(m)}\n\\boldsymbol\\alpha^{*(m)}(t).\n\\]\nClassical shared-representation models impose\n\\[\n\\boldsymbol A^{*(1)}\n=\n\\cdots\n=\n\\boldsymbol A^{*(M)}.\n\\]\nWe instead allow the representations to be similar but heterogeneous."
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#functional-regression-changes-the-geometry",
-    "href": "posts/functional-mtl/index.html#functional-regression-changes-the-geometry",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "Functional regression changes the geometry",
-    "text": "Functional regression changes the geometry\nFor a perturbation (f), define the prediction seminorm\n\\[\n\\|\\boldsymbol f\\|_{X^{(m)}}^2\n=\n\\left\\langle\n\\boldsymbol f,\n\\mathcal C^{(m)}\n\\boldsymbol f\n\\right\\rangle.\n\\]\nIf\n\\[\n\\mathcal C\\phi_k=\\mu_k\\phi_k,\n\\qquad\nf=\\sum_{k\\ge1}c_k\\phi_k,\n\\]\nthen\n\\[\n\\|f\\|_X^2\n=\n\\sum_{k\\ge1}\\mu_kc_k^2,\n\\]\nwhereas\n\\[\n\\|f\\|_{L_2}^2\n=\n\\sum_{k\\ge1}c_k^2.\n\\]\nThus, two perturbations that are equally large in (L_2) geometry may have very different predictive consequences."
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#statistical-formulation",
-    "href": "posts/functional-mtl/index.html#statistical-formulation",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "Statistical formulation",
-    "text": "Statistical formulation\nFor (m),\n\\[\nY_i^{(m)}\n=\n\\sum_{j=1}^p\n\\int_{\\mathcal T}\nX_{ij}^{(m)}(t)\n\\beta_j^{*(m)}(t)\\,dt\n+\n\\varepsilon_i^{(m)}.\n\\]\nWe assume\n\\[\n\\boldsymbol\\beta^{*(m)}(t)\n=\n\\boldsymbol A^{*(m)}\n\\boldsymbol\\alpha^{*(m)}(t),\n\\qquad\n\\boldsymbol A^{*(m)}\\in\\mathbb O_{p,r}.\n\\]"
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#similar-rather-than-identical-representations",
-    "href": "posts/functional-mtl/index.html#similar-rather-than-identical-representations",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "Similar rather than identical representations",
-    "text": "Similar rather than identical representations\nThere exists a central representation () such that\n\\[\n\\left\\|\nP_{\\boldsymbol A^{*(m)}}\n-\nP_{\\overline{\\boldsymbol A}}\n\\right\\|_{\\mathrm{op}}\n\\le h\n\\]\nfor informative tasks (mS).\nThe case (h=0) corresponds to exact representation sharing."
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#two-ways-to-learn-across-tasks",
-    "href": "posts/functional-mtl/index.html#two-ways-to-learn-across-tasks",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "Two ways to learn across tasks",
-    "text": "Two ways to learn across tasks\n\nPenalized empirical risk minimization\nThe first approach combines\n\\[\n\\text{prediction loss}\n+\n\\text{functional roughness}\n+\n\\text{representation similarity}.\n\\]\nA task-specific refitting step subsequently adapts the joint estimator to each individual task.\n\n\nSpectral aggregation\nThe second approach follows\n\\[\n\\text{single-task pilots}\n\\rightarrow\n\\text{robust aggregation}\n\\rightarrow\n\\text{SVD}\n\\rightarrow\n\\text{central representation}\n\\rightarrow\n\\text{task-specific refitting}.\n\\]"
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#what-does-the-theory-tell-us",
-    "href": "posts/functional-mtl/index.html#what-does-the-theory-tell-us",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "What does the theory tell us?",
-    "text": "What does the theory tell us?\nSuppressing constants and logarithmic factors, the estimation error has the schematic form\n\\[\n\\text{error}\n\\lesssim\n\\underbrace{\n\\sigma\\sqrt{\\frac{rp}{n|\\mathcal S|}}\n}_{\\text{cross-task gain}}\n+\n\\underbrace{\n\\sigma\\sqrt{\\frac{r\\,d_K(\\eta)}{n}}\n}_{\\text{functional estimation}}\n+\n\\underbrace{\nK^{-\\tau}\n+\n\\eta^{1/2}K^{(d-\\nu)_+}\n}_{\\text{approximation and smoothing}}\n+\n\\underbrace{\n\\sqrt r\\,h\n}_{\\text{heterogeneity}}\n+\n\\underbrace{\n\\text{contamination}\n}_{\\epsilon}.\n\\]\nThe exact theorem contains task-specific signal-strength terms and additional logarithmic factors; the display above is intended only to highlight the statistical structure.\nA key safeguard is that the final estimator is controlled by\n\\[\n\\text{multi-task error}\n\\wedge\n\\text{single-task error}.\n\\]\n\n\n\n\n\n\nNoteA central design principle\n\n\n\nBorrow information when tasks are compatible, but retain a single-task fallback when they are not."
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#why-prediction-geometry-matters-in-refitting",
-    "href": "posts/functional-mtl/index.html#why-prediction-geometry-matters-in-refitting",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "Why prediction geometry matters in refitting",
-    "text": "Why prediction geometry matters in refitting\nCoefficient-space distance such as\n\\[\n\\|B-B_0\\|_F\n\\]\ndoes not directly reflect how a perturbation affects prediction.\nThe relevant functional geometry combines prediction and smoothness:\n\\[\n\\|\\beta_B-\\beta_{B_0}\\|_X^2\n+\n\\eta\\|\\beta_B\\|_R^2.\n\\]"
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#numerical-illustration",
-    "href": "posts/functional-mtl/index.html#numerical-illustration",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "Numerical illustration",
-    "text": "Numerical illustration\nSimulation results will be added here."
-  },
-  {
-    "objectID": "posts/functional-mtl/index.html#what-i-learned-from-this-project",
-    "href": "posts/functional-mtl/index.html#what-i-learned-from-this-project",
-    "title": "Learning Across Functional Regression Tasks with Similar Representations",
-    "section": "What I learned from this project",
-    "text": "What I learned from this project\nThis project changed how I think about multi-task learning in functional models in several ways.\nFirst, transferring finite-dimensional multi-task ideas to functional data is not merely a matter of replacing vectors by basis coefficients. The covariance operator changes the relevant statistical geometry.\nSecond, representation similarity alone is not sufficient for successful multi-task learning. The tasks must also be sufficiently diverse to reveal the latent representation.\nThird, robustness and adaptivity are closely related design goals. A useful multi-task procedure should exploit cross-task structure when it is present, while retaining a reasonable fallback when the structure weakens.\nFinally, the analysis requires functional approximation, empirical prediction geometry, representation perturbation, and cross-task concentration to work together."
   }
 ]

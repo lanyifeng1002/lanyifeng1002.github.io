@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Research Notes – Yifeng Lan</title>
+<title>Blog – Yifeng Lan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -75,69 +73,11 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -166,10 +106,6 @@ window.Quarto = {
     <a class="nav-link active" href="./blog.html" aria-current="page"> 
 <span class="menu-text">Blog</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./cv.html"> 
-<span class="menu-text">CV</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -181,15 +117,13 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RnVuY3Rpb25hbCUyMERhdGElMjBBbmFseXNpcw==">Functional Data Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TXVsdGktdGFzayUyMExlYXJuaW5n">Multi-task Learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmVwcmVzZW50YXRpb24lMjBMZWFybmluZw==">Representation Learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3RhdGlzdGljYWwlMjBNYWNoaW5lJTIwTGVhcm5pbmc=">Statistical Machine Learning <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Research Notes</h1>
+<h1 class="title">Blog</h1>
 </div>
 
 
@@ -206,51 +140,13 @@ window.Quarto = {
 </header>
 
 
+<section id="functional-multi-task-learning-with-similar-representations" class="level2">
+<h2 class="anchored" data-anchor-id="functional-multi-task-learning-with-similar-representations"><a href="posts/functional-mtl/">Functional Multi-Task Learning with Similar Representations</a></h2>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="RnVuY3Rpb25hbCUyMERhdGElMjBBbmFseXNpcyUyQ011bHRpLXRhc2slMjBMZWFybmluZyUyQ1JlcHJlc2VudGF0aW9uJTIwTGVhcm5pbmclMkNTdGF0aXN0aWNhbCUyME1hY2hpbmUlMjBMZWFybmluZw==" data-listing-date-sort="1787846400000" data-listing-file-modified-sort="1788670065572" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="367">
-<div class="thumbnail"><a href="./posts/functional-mtl/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/functional-mtl/index.html" class="no-external">Learning Across Functional Regression Tasks with Similar Representations</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('RnVuY3Rpb25hbCUyMERhdGElMjBBbmFseXNpcw=='); return false;">Functional Data Analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TXVsdGktdGFzayUyMExlYXJuaW5n'); return false;">Multi-task Learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UmVwcmVzZW50YXRpb24lMjBMZWFybmluZw=='); return false;">Representation Learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBNYWNoaW5lJTIwTGVhcm5pbmc='); return false;">Statistical Machine Learning</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/functional-mtl/index.html" class="no-external">
-<p>Prediction geometry, representation heterogeneity, and robust multi-task learning for functional data.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/functional-mtl/index.html" class="no-external">
-<div class="listing-date">
-Aug 28, 2026
-</div>
-<div class="listing-author">
-Yifeng Lan
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -324,7 +220,7 @@ Yifeng Lan
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("ssh:\/\/git@ssh\.github\.com:443\/lanyifeng1002\/lanyifeng1002\.github\.io\.git");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

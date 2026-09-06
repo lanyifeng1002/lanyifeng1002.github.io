@@ -77,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -106,10 +106,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./cv.html"> 
-<span class="menu-text">CV</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -121,15 +117,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#research" id="toc-research" class="nav-link active" data-scroll-target="#research">Research</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -152,11 +140,37 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="research" class="level2">
-<h2 class="anchored" data-anchor-id="research">Research</h2>
-<p>Research projects will be listed here.</p>
+<section id="research-experience" class="level2">
+<h2 class="anchored" data-anchor-id="research-experience">Research Experience</h2>
+<section id="functional-multi-task-learning-with-similar-representations" class="level3">
+<h3 class="anchored" data-anchor-id="functional-multi-task-learning-with-similar-representations"><a href="posts/functional-mtl/">Functional Multi-Task Learning with Similar Representations</a></h3>
+<p><em>Sept.&nbsp;2024–Present</em></p>
+<p><strong>Contribution.</strong> This research studies how to share information across functional regression tasks with multiple functional predictors, model their task-specific coefficient functions through similar low-rank representations, while accounting for the covariance and smoothness geometry intrinsic to functional regression in estimation and refitting. This leads to a functional multi-task learning framework with theoretical guarantees, validated through simulations and real-data analysis.</p>
+<p><strong>Outcome.</strong> Manuscript in preparation.</p>
+</section>
+<section id="improving-the-quality-and-flavor-of-radish-paocai-through-mixed-strain-fermentation" class="level3">
+<h3 class="anchored" data-anchor-id="improving-the-quality-and-flavor-of-radish-paocai-through-mixed-strain-fermentation">Improving the Quality and Flavor of Radish Paocai through Mixed-Strain Fermentation</h3>
+<p><em>Dec.&nbsp;2020–Jun.&nbsp;2023</em></p>
+<p><strong>Contribution.</strong> Curated and analyzed multi-dimensional fermentation datasets, integrating physicochemical, amino-acid, organic-acid, volatile-compound, texture, and sensory measurements to compare fermentation conditions and characterize changes in product quality and flavor.</p>
+<p><strong>Outcome.</strong> Second-author article published in <em>Journal of Food Science</em> (2025).</p>
+</section>
+</section>
+<section id="selected-projects" class="level2">
+<h2 class="anchored" data-anchor-id="selected-projects">Selected Projects</h2>
+<section id="cross-domain-bearing-fault-diagnosis-via-transfer-learning" class="level3">
+<h3 class="anchored" data-anchor-id="cross-domain-bearing-fault-diagnosis-via-transfer-learning">Cross-Domain Bearing Fault Diagnosis via Transfer Learning</h3>
+<p><em>2025</em></p>
+<p><strong>Contribution.</strong> Developed a cross-domain fault-diagnosis framework for transferring knowledge from labeled laboratory bearing data to scarce, unlabeled real-train data; constructed an MMD-based CNN domain-adaptation model to align source and target feature distributions and evaluated transfer performance through cross-validation and classification diagnostics.</p>
+<p><strong>Outcome.</strong> National Second Prize, China Postgraduate Mathematical Contest in Modeling.</p>
+</section>
+<section id="promotion-effect-evaluation-and-resource-reallocation-under-periodic-demand-fluctuations" class="level3">
+<h3 class="anchored" data-anchor-id="promotion-effect-evaluation-and-resource-reallocation-under-periodic-demand-fluctuations">Promotion Effect Evaluation and Resource Reallocation under Periodic Demand Fluctuations</h3>
+<p><em>2026</em></p>
+<p><strong>Contribution.</strong> Analyzed promotional effectiveness under periodic consumption fluctuations on an instant-retail platform and developed a data-driven framework for evaluating promotion outcomes and reallocating limited marketing resources across customer or demand segments.</p>
+<p><strong>Outcome.</strong> Outstanding Project Award (50/2000+), 6th Meituan Business Analytics Competition.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -233,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("ssh:\/\/git@ssh\.github\.com:443\/lanyifeng1002\/lanyifeng1002\.github\.io\.git");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

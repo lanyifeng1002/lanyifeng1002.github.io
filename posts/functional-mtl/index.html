@@ -6,11 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Yifeng Lan">
-<meta name="dcterms.date" content="2026-08-28">
-<meta name="description" content="Prediction geometry, representation heterogeneity, and robust multi-task learning for functional data.">
 
-<title>Learning Across Functional Regression Tasks with Similar Representations – Yifeng Lan</title>
+<title>Functional Multi-Task Learning with Similar Representations – Yifeng Lan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -138,10 +135,6 @@ window.Quarto = {
     <a class="nav-link" href="../../blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../cv.html"> 
-<span class="menu-text">CV</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -158,20 +151,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-question" id="toc-the-question" class="nav-link active" data-scroll-target="#the-question">The question</a></li>
-  <li><a href="#why-exact-sharing-can-be-too-restrictive" id="toc-why-exact-sharing-can-be-too-restrictive" class="nav-link" data-scroll-target="#why-exact-sharing-can-be-too-restrictive">Why exact sharing can be too restrictive</a></li>
-  <li><a href="#functional-regression-changes-the-geometry" id="toc-functional-regression-changes-the-geometry" class="nav-link" data-scroll-target="#functional-regression-changes-the-geometry">Functional regression changes the geometry</a></li>
-  <li><a href="#statistical-formulation" id="toc-statistical-formulation" class="nav-link" data-scroll-target="#statistical-formulation">Statistical formulation</a></li>
-  <li><a href="#similar-rather-than-identical-representations" id="toc-similar-rather-than-identical-representations" class="nav-link" data-scroll-target="#similar-rather-than-identical-representations">Similar rather than identical representations</a></li>
-  <li><a href="#two-ways-to-learn-across-tasks" id="toc-two-ways-to-learn-across-tasks" class="nav-link" data-scroll-target="#two-ways-to-learn-across-tasks">Two ways to learn across tasks</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#main-contributions" id="toc-main-contributions" class="nav-link" data-scroll-target="#main-contributions">Main contributions</a></li>
+  <li><a href="#problem-setup" id="toc-problem-setup" class="nav-link" data-scroll-target="#problem-setup">Problem setup</a></li>
+  <li><a href="#proposed-methods" id="toc-proposed-methods" class="nav-link" data-scroll-target="#proposed-methods">Proposed methods</a>
   <ul class="collapse">
-  <li><a href="#penalized-empirical-risk-minimization" id="toc-penalized-empirical-risk-minimization" class="nav-link" data-scroll-target="#penalized-empirical-risk-minimization">Penalized empirical risk minimization</a></li>
-  <li><a href="#spectral-aggregation" id="toc-spectral-aggregation" class="nav-link" data-scroll-target="#spectral-aggregation">Spectral aggregation</a></li>
+  <li><a href="#functional-penalized-empirical-risk-minimization" id="toc-functional-penalized-empirical-risk-minimization" class="nav-link" data-scroll-target="#functional-penalized-empirical-risk-minimization">Functional penalized empirical risk minimization</a></li>
+  <li><a href="#functional-spectral-method" id="toc-functional-spectral-method" class="nav-link" data-scroll-target="#functional-spectral-method">Functional spectral method</a></li>
   </ul></li>
-  <li><a href="#what-does-the-theory-tell-us" id="toc-what-does-the-theory-tell-us" class="nav-link" data-scroll-target="#what-does-the-theory-tell-us">What does the theory tell us?</a></li>
-  <li><a href="#why-prediction-geometry-matters-in-refitting" id="toc-why-prediction-geometry-matters-in-refitting" class="nav-link" data-scroll-target="#why-prediction-geometry-matters-in-refitting">Why prediction geometry matters in refitting</a></li>
-  <li><a href="#numerical-illustration" id="toc-numerical-illustration" class="nav-link" data-scroll-target="#numerical-illustration">Numerical illustration</a></li>
-  <li><a href="#what-i-learned-from-this-project" id="toc-what-i-learned-from-this-project" class="nav-link" data-scroll-target="#what-i-learned-from-this-project">What I learned from this project</a></li>
+  <li><a href="#numerical-evidence" id="toc-numerical-evidence" class="nav-link" data-scroll-target="#numerical-evidence">Numerical evidence</a></li>
+  <li><a href="#real-data-analysis" id="toc-real-data-analysis" class="nav-link" data-scroll-target="#real-data-analysis">Real data analysis</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -180,37 +171,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Learning Across Functional Regression Tasks with Similar Representations</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">Functional Data Analysis</div>
-    <div class="quarto-category">Multi-task Learning</div>
-    <div class="quarto-category">Representation Learning</div>
-    <div class="quarto-category">Statistical Machine Learning</div>
-  </div>
-  </div>
-
-<div>
-  <div class="description">
-    Prediction geometry, representation heterogeneity, and robust multi-task learning for functional data.
-  </div>
+<h1 class="title">Functional Multi-Task Learning with Similar Representations</h1>
 </div>
+
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Yifeng Lan </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 28, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -220,205 +188,82 @@ window.Quarto = {
 </header>
 
 
-<section id="the-question" class="level2">
-<h2 class="anchored" data-anchor-id="the-question">The question</h2>
-<p>Functional linear regression is a natural tool when predictors are curves rather than finite-dimensional vectors.</p>
-<blockquote class="blockquote">
-<p><strong>When can multiple functional regression tasks borrow strength from one another without forcing their underlying representations to be identical?</strong></p>
-</blockquote>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>We study multi-task scalar-on-multiple-function-regression in which several related regression tasks are available, but their underlying structures need not be identical. Within each informative task, the vector of slope functions is assumed to admit a low dimensional representation, while these representations are allowed to vary around a common subspace and a fraction of tasks may be unrelated. We develop two estimation procedures based respectively on penalized empirical risk minimization and robust spectral aggregation. Both procedures combine representation learning across tasks with task specific refitting, with discrepancies measured through a geometry that incorporates the covariance structure of the functional predictors and smoothness regularization.</p>
+<p>We establish prediction error bounds that separate the contributions of functional complexity, representation heterogeneity, task contamination, and information shared across tasks. The resulting bounds show that borrowing information across tasks improves on separate functional regression when the informative representations are sufficiently similar and contamination is limited, while the refitting step retains the single task rate when such sharing is not beneficial. The spectral procedure achieves a sharper dependence on the intrinsic representation dimension, whereas the penalized procedure is more robust to task contamination.</p>
 </section>
-<section id="why-exact-sharing-can-be-too-restrictive" class="level2">
-<h2 class="anchored" data-anchor-id="why-exact-sharing-can-be-too-restrictive">Why exact sharing can be too restrictive</h2>
-<p>For task (m), we consider</p>
-<p><span class="math display">\[
-\boldsymbol\beta^{*(m)}(t)
-=
-\boldsymbol A^{*(m)}
-\boldsymbol\alpha^{*(m)}(t).
-\]</span></p>
-<p>Classical shared-representation models impose</p>
-<p><span class="math display">\[
-\boldsymbol A^{*(1)}
-=
-\cdots
-=
-\boldsymbol A^{*(M)}.
-\]</span></p>
-<p>We instead allow the representations to be similar but heterogeneous.</p>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>Consider a regional air-quality monitoring network in which each station records daily trajectories of pollutants and meteorological variables, such as PM2.5 and temperature. A typical goal is to predict a scalar outcome, for example the next-day pollution level or a health-risk measure, from these functional covariates. Each station then gives a scalar-on-multiple-function regression problem. Stations in the same region are related through common atmospheric transport and emission patterns, but their regression relationships may differ because of local traffic, geography, industrial activity, and meteorological conditions.</p>
+<p>In all these examples, data are collected from several related populations, sites, or subjects, while each regression task itself involves multiple functional predictors. Estimating the tasks separately ignores potentially useful shared information, whereas pooling them into a single model ignores task-specific differences. This raises a basic question: how can information across related regression tasks improve the estimation of multiple functional effects without forcing the tasks to be the same?</p>
 </section>
-<section id="functional-regression-changes-the-geometry" class="level2">
-<h2 class="anchored" data-anchor-id="functional-regression-changes-the-geometry">Functional regression changes the geometry</h2>
-<p>For a perturbation (f), define the prediction seminorm</p>
-<p><span class="math display">\[
-\|\boldsymbol f\|_{X^{(m)}}^2
-=
-\left\langle
-\boldsymbol f,
-\mathcal C^{(m)}
-\boldsymbol f
-\right\rangle.
-\]</span></p>
-<p>If</p>
-<p><span class="math display">\[
-\mathcal C\phi_k=\mu_k\phi_k,
-\qquad
-f=\sum_{k\ge1}c_k\phi_k,
-\]</span></p>
-<p>then</p>
-<p><span class="math display">\[
-\|f\|_X^2
-=
-\sum_{k\ge1}\mu_kc_k^2,
-\]</span></p>
-<p>whereas</p>
-<p><span class="math display">\[
-\|f\|_{L_2}^2
-=
-\sum_{k\ge1}c_k^2.
-\]</span></p>
-<p>Thus, two perturbations that are equally large in (L_2) geometry may have very different predictive consequences.</p>
+<section id="main-contributions" class="level2">
+<h2 class="anchored" data-anchor-id="main-contributions">Main contributions</h2>
+<p>To address these issues, we make three main contributions. First, we formulate a multi-task scalar-on-multiple-function regression model in which the multiple slope functions within each task admit a low-dimensional representation. These representations are allowed to be similar rather than identical across informative tasks, while a fraction of tasks may be unrelated or contaminated.</p>
+<p>Second, we develop two estimators based on penalized empirical risk minimization and robust spectral aggregation. Both methods combine representation learning with task-specific refitting, while accounting for the regularization and prediction structure of functional regression. Third, we establish prediction error bounds that characterize the effects of functional complexity, representation heterogeneity, task contamination, and cross-task information. The theory identifies regimes in which multi-task learning improves upon separate taskwise estimation while retaining a safe-net guarantee.</p>
 </section>
-<section id="statistical-formulation" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-formulation">Statistical formulation</h2>
-<p>For (m),</p>
+<section id="problem-setup" class="level2">
+<h2 class="anchored" data-anchor-id="problem-setup">Problem setup</h2>
+<p>Consider (M) independent regression tasks. The (m)-th task consists of (n_m) independent observations. The functional linear model for the (m)-th task is written as</p>
 <p><span class="math display">\[
 Y_i^{(m)}
 =
-\sum_{j=1}^p
-\int_{\mathcal T}
-X_{ij}^{(m)}(t)
-\beta_j^{*(m)}(t)\,dt
-+
-\varepsilon_i^{(m)}.
+\sum_{j=1}^{p}\int_{\mathcal T}X_{ij}^{(m)}(t)\beta_j^{*(m)}(t)\,dt
++\varepsilon_i^{(m)},
+\qquad i\in[n].
 \]</span></p>
-<p>We assume</p>
+<p>We assume that the (p) slope functions are linearly spanned by (r) latent slope functions with (rp). Specifically,</p>
 <p><span class="math display">\[
 \boldsymbol\beta^{*(m)}(t)
 =
-\boldsymbol A^{*(m)}
-\boldsymbol\alpha^{*(m)}(t),
+\boldsymbol A^{*(m)}\boldsymbol\alpha^{*(m)}(t),
 \qquad
-\boldsymbol A^{*(m)}\in\mathbb O_{p,r}.
+\boldsymbol A^{*(m)}\in\mathbb O_{p\times r}.
 \]</span></p>
-</section>
-<section id="similar-rather-than-identical-representations" class="level2">
-<h2 class="anchored" data-anchor-id="similar-rather-than-identical-representations">Similar rather than identical representations</h2>
-<p>There exists a central representation () such that</p>
+<p>The matrix (A^{<em>(m)}) characterizes the low-dimensional representation of task (m) along the coordinate directions of observed functions, while (^{</em>(m)}) captures the temporal variation pattern of this task in the latent representation space. The matrix (A^{*(m)}) itself is not uniquely identifiable; the identifiable quantity is its column space, or equivalently the projection matrix.</p>
+<p>Let (S) denote the unknown set of informative tasks. The representations ({A^{*(m)}}_{mS}) are assumed to be similar to one another. We assume that there exists (h) such that</p>
 <p><span class="math display">\[
+\min_{\bar{\boldsymbol A}\in\mathbb O_{p\times r}}
+\max_{m\in\mathcal S}
 \left\|
-P_{\boldsymbol A^{*(m)}}
+\boldsymbol A^{*(m)}\boldsymbol A^{*(m)\top}
 -
-P_{\overline{\boldsymbol A}}
+\bar{\boldsymbol A}\bar{\boldsymbol A}^{\top}
 \right\|_{\mathrm{op}}
-\le h
+\le h.
 \]</span></p>
-<p>for informative tasks (mS).</p>
-<p>The case (h=0) corresponds to exact representation sharing.</p>
+<p>The matrix ({A}) achieving the minimum can be understood as a “central representation”, and (h) is the similarity measure. A small (h) means the representations are more similar. The case when (h=0) reduces to the setting in which all informative tasks share exactly the same representation subspace.</p>
+<p>Tasks belonging to (S^c) are not required to satisfy the low-dimensional representation structure. More generally, we allow their data distributions to be arbitrary. Our statistical goal is to estimate ({^{*(m)}:m}) without prior knowledge of (S). When (h) and the contamination proportion are small, we borrow information across multiple tasks to improve estimation accuracy for informative tasks; meanwhile, the estimation maintains stability under substantial task heterogeneity.</p>
 </section>
-<section id="two-ways-to-learn-across-tasks" class="level2">
-<h2 class="anchored" data-anchor-id="two-ways-to-learn-across-tasks">Two ways to learn across tasks</h2>
-<section id="penalized-empirical-risk-minimization" class="level3">
-<h3 class="anchored" data-anchor-id="penalized-empirical-risk-minimization">Penalized empirical risk minimization</h3>
-<p>The first approach combines</p>
-<p><span class="math display">\[
-\text{prediction loss}
-+
-\text{functional roughness}
-+
-\text{representation similarity}.
-\]</span></p>
-<p>A task-specific refitting step subsequently adapts the joint estimator to each individual task.</p>
+<section id="proposed-methods" class="level2">
+<h2 class="anchored" data-anchor-id="proposed-methods">Proposed methods</h2>
+<p>The first uses penalized empirical risk minimization to adaptively aggregate similar task representations while remaining robust to outlier tasks. The second uses robust spectral aggregation and is computationally more efficient.</p>
+<section id="functional-penalized-empirical-risk-minimization" class="level3">
+<h3 class="anchored" data-anchor-id="functional-penalized-empirical-risk-minimization">Functional penalized empirical risk minimization</h3>
+<p>In Algorithm 1, Step 1 aims to learn all tasks by aggregating the data. The penalty encourages the task-specific representation subspaces to stay close to a common center, while still allowing them to differ. This form of regularization also reduces the influence of a small number of outlier tasks on the learned central representation.</p>
+<p>To prevent negative transfer when the representation learned from multiple tasks is not sufficiently accurate for a particular task, Step 2 performs a task-specific biased refitting using the data from that task. This allows the estimator to move away from the Step 1 estimate when supported by the task-specific data, while retaining information learned across tasks otherwise. This refitting step therefore guards against negative transfer.</p>
 </section>
-<section id="spectral-aggregation" class="level3">
-<h3 class="anchored" data-anchor-id="spectral-aggregation">Spectral aggregation</h3>
-<p>The second approach follows</p>
-<p><span class="math display">\[
-\text{single-task pilots}
-\rightarrow
-\text{robust aggregation}
-\rightarrow
-\text{SVD}
-\rightarrow
-\text{central representation}
-\rightarrow
-\text{task-specific refitting}.
-\]</span></p>
+<section id="functional-spectral-method" class="level3">
+<h3 class="anchored" data-anchor-id="functional-spectral-method">Functional spectral method</h3>
+<p>We next propose a spectral procedure as a computationally simpler alternative to the joint penalized ERM in Algorithm 1. The basic idea is to first construct task-specific pilot estimators, robustly aggregate their low-dimensional representation information through singular value decomposition (SVD), and then perform task-specific refitting within the estimated representation subspace.</p>
+<p>Each task is first estimated separately using the penalized functional loss, and the resulting pilot is rescaled by the empirical temporal Gram matrix before truncation. The truncation then limits the influence of unusually large pilot blocks. Step 3 applies SVD to the concatenated blocks and uses the leading (r) left singular vectors to estimate the central representation subspace. Each task is then refitted within this subspace, followed by the final task-specific refitting step.</p>
 </section>
 </section>
-<section id="what-does-the-theory-tell-us" class="level2">
-<h2 class="anchored" data-anchor-id="what-does-the-theory-tell-us">What does the theory tell us?</h2>
-<p>Suppressing constants and logarithmic factors, the estimation error has the schematic form</p>
-<p><span class="math display">\[
-\text{error}
-\lesssim
-\underbrace{
-\sigma\sqrt{\frac{rp}{n|\mathcal S|}}
-}_{\text{cross-task gain}}
-+
-\underbrace{
-\sigma\sqrt{\frac{r\,d_K(\eta)}{n}}
-}_{\text{functional estimation}}
-+
-\underbrace{
-K^{-\tau}
-+
-\eta^{1/2}K^{(d-\nu)_+}
-}_{\text{approximation and smoothing}}
-+
-\underbrace{
-\sqrt r\,h
-}_{\text{heterogeneity}}
-+
-\underbrace{
-\text{contamination}
-}_{\epsilon}.
-\]</span></p>
-<p>The exact theorem contains task-specific signal-strength terms and additional logarithmic factors; the display above is intended only to highlight the statistical structure.</p>
-<p>A key safeguard is that the final estimator is controlled by</p>
-<p><span class="math display">\[
-\text{multi-task error}
-\wedge
-\text{single-task error}.
-\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>A central design principle
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Borrow information when tasks are compatible, but retain a single-task fallback when they are not.</p>
-</div>
-</div>
+<section id="numerical-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-evidence">Numerical evidence</h2>
+<p>Hard-share performs well when (h) is small, but its prediction error increases rapidly as (h) grows. This reflects the cost of imposing an exact common representation when the task representations become different. In contrast, FpERM and FSpectral increase much more slowly and remain below the Single-task benchmark across the four settings. Overall, the results support the benefit of allowing similar representations while retaining task level adaptation.</p>
+<p>The prediction errors of Pooled and Hard-share increase substantially once unrelated tasks are introduced. In contrast, FpERM and FSpectral remain stable on the informative tasks and continue to improve over Single-task. They also remain close to Single-task on the contaminating tasks. This agrees with the role of the final refitting step, which limits negative transfer when a task does not conform to the learned common structure.</p>
+<p>Without contamination, increasing (M) improves the methods that learn a common representation. The pattern changes when 4% of the tasks are contaminated. Hard-share deteriorates as (M) increases because more outlier tasks enter the estimation of the common representation. In contrast, FpERM and FSpectral remain stable and their mean prediction errors continue to decrease. This shows that the proposed methods can benefit from additional related tasks without becoming increasingly sensitive to a small proportion of outliers.</p>
 </section>
-<section id="why-prediction-geometry-matters-in-refitting" class="level2">
-<h2 class="anchored" data-anchor-id="why-prediction-geometry-matters-in-refitting">Why prediction geometry matters in refitting</h2>
-<p>Coefficient-space distance such as</p>
-<p><span class="math display">\[
-\|B-B_0\|_F
-\]</span></p>
-<p>does not directly reflect how a perturbation affects prediction.</p>
-<p>The relevant functional geometry combines prediction and smoothness:</p>
-<p><span class="math display">\[
-\|\beta_B-\beta_{B_0}\|_X^2
-+
-\eta\|\beta_B\|_R^2.
-\]</span></p>
+<section id="real-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="real-data-analysis">Real data analysis</h2>
+<p>We apply FpERM and FSpectral to the Beijing Multi Site Air Quality data set. The 12 monitoring stations and four seasons define (M=48) tasks. For each station and day, the response is the daily mean PM2.5 concentration. The functional predictors are the 24 hourly measurements of PM10, SO2, NO2, CO, O3, temperature, pressure, dew point, rain, and wind speed.</p>
+<p>Relative to Single, FpERM reduces the average task RMSE by 45.0% when (r=2) and by 51.3% when (r=3). Paired block bootstrap intervals for the FpERM improvement over Single exclude zero at both ranks. The analysis therefore provides empirical evidence that representation sharing can improve functional prediction when each task has a limited sample size. It also shows that the comparison between exact and approximate sharing can depend on the representation rank.</p>
 </section>
-<section id="numerical-illustration" class="level2">
-<h2 class="anchored" data-anchor-id="numerical-illustration">Numerical illustration</h2>
-<p>Simulation results will be added here.</p>
-</section>
-<section id="what-i-learned-from-this-project" class="level2">
-<h2 class="anchored" data-anchor-id="what-i-learned-from-this-project">What I learned from this project</h2>
-<p>This project changed how I think about multi-task learning in functional models in several ways.</p>
-<p>First, transferring finite-dimensional multi-task ideas to functional data is not merely a matter of replacing vectors by basis coefficients. The covariance operator changes the relevant statistical geometry.</p>
-<p>Second, representation similarity alone is not sufficient for successful multi-task learning. The tasks must also be sufficiently diverse to reveal the latent representation.</p>
-<p>Third, robustness and adaptivity are closely related design goals. A useful multi-task procedure should exploit cross-task structure when it is present, while retaining a reasonable fallback when the structure weakens.</p>
-<p>Finally, the analysis requires functional approximation, empirical prediction geometry, representation perturbation, and cross-task concentration to work together.</p>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>We studied multi-task scalar-on-multiple-function regression under a similar representation structure, allowing informative tasks to have related but not identical representations and permitting task contamination. We proposed two methods based on penalized empirical risk minimization and spectral aggregation, both followed by task-specific refitting. The theoretical results characterize the effects of functional complexity, representation heterogeneity, contamination, and cross-task information, and show when multi-task learning can improve over separate taskwise estimation while retaining a safe-net guarantee.</p>
 
 
 </section>
@@ -497,7 +342,7 @@ K^{-\tau}
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("ssh:\/\/git@ssh\.github\.com:443\/lanyifeng1002\/lanyifeng1002\.github\.io\.git");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

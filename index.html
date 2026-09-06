@@ -106,10 +106,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./cv.html"> 
-<span class="menu-text">CV</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -155,15 +151,6 @@ ul.task-list li input[type="checkbox"] {
 <li>Functional and High-dimensional Data Analysis</li>
 <li>Statistical Foundations of Modern AI</li>
 </ul>
-</section>
-<section id="selected-research" class="level2">
-<h2 class="anchored" data-anchor-id="selected-research">Selected Research</h2>
-<section id="functional-multi-task-learning-with-similar-representations" class="level3">
-<h3 class="anchored" data-anchor-id="functional-multi-task-learning-with-similar-representations">Functional Multi-task Learning with Similar Representations</h3>
-<p><em>Manuscript in preparation, 2026.</em></p>
-<p>We study multi-task functional linear regression in which task-specific slope functions admit similar, but not necessarily identical, low-dimensional representations. Our goal is to understand when information sharing across tasks improves estimation while remaining robust to heterogeneous or outlying tasks.</p>
-<p><a href="./research.html">Research project →</a></p>
-</section>
 </section>
 <section id="contact" class="level2">
 <h2 class="anchored" data-anchor-id="contact">Contact</h2>
@@ -247,7 +234,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("ssh:\/\/git@ssh\.github\.com:443\/lanyifeng1002\/lanyifeng1002\.github\.io\.git");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
