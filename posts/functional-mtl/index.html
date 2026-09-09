@@ -210,26 +210,21 @@ window.Quarto = {
 </section>
 <section id="model" class="level2">
 <h2 class="anchored" data-anchor-id="model">Model</h2>
-<p>Consider (M) independent regression tasks. For simplicity, let each task contain (n) observations. The scalar-on-multiple-function model for task (m) is</p>
-<p><span class="math display">\[
-Y_i^{(m)}
+<p>Consider <span class="math inline">\(M\)</span> independent regression tasks. For simplicity, let each task contain <span class="math inline">\(n\)</span> observations. The scalar-on-multiple-function model for task <span class="math inline">\(m\)</span> is</p>
+<p><span class="math display">\[Y_i^{(m)}
 =
 \sum_{j=1}^{p}\int_{\mathcal T}X_{ij}^{(m)}(t)\beta_j^{*(m)}(t)\,dt
 +\varepsilon_i^{(m)},
-\qquad i\in[n],\quad m\in[M].
-\]</span></p>
-<p>The (p) slope functions are assumed to be linearly spanned by (rp) latent slope functions:</p>
-<p><span class="math display">\[
-\boldsymbol\beta^{*(m)}(t)
+\qquad i\in[n],\quad m\in[M].\]</span></p>
+<p>The <span class="math inline">\(p\)</span> slope functions are assumed to be linearly spanned by <span class="math inline">\(r\le p\)</span> latent slope functions:</p>
+<p><span class="math display">\[\boldsymbol\beta^{*(m)}(t)
 =
 \boldsymbol A^{*(m)}\boldsymbol\alpha^{*(m)}(t),
 \qquad
-\boldsymbol A^{*(m)}\in\mathbb O_{p\times r}.
-\]</span></p>
+\boldsymbol A^{*(m)}\in\mathbb O^{p\times r}.\]</span></p>
 <p>Here, <span class="math inline">\(\boldsymbol A^{*(m)}\)</span> characterizes the low-dimensional representation along the coordinates of the observed functions, while <span class="math inline">\(\boldsymbol\alpha^{*(m)}(t)\)</span> captures temporal variation in the latent representation space. Because <span class="math inline">\(\boldsymbol A^{*(m)}\)</span> is identifiable only up to rotation, the meaningful object is its column space, or equivalently the projector <span class="math inline">\(\boldsymbol A^{*(m)}\boldsymbol A^{*(m)\top}\)</span>.</p>
 <p>Let <span class="math inline">\(\mathcal S\subseteq[M]\)</span> be the unknown set of informative tasks. Their representations are similar, rather than necessarily identical, when</p>
-<p><span class="math display">\[
-\min_{\bar{\boldsymbol A}\in\mathbb O_{p\times r}}
+<p><span class="math display">\[\min_{\bar{\boldsymbol A}\in\mathbb O^{p\times r}}
 \max_{m\in\mathcal S}
 \left\|
 \boldsymbol A^{*(m)}\boldsymbol A^{*(m)\top}
@@ -238,38 +233,31 @@ Y_i^{(m)}
 \right\|_{\mathrm{op}}
 \le h,
 \qquad
-\epsilon=\frac{|\mathcal S^c|}{M}.
-\]</span></p>
+\epsilon=\frac{|\mathcal S^c|}{M}.\]</span></p>
 <p>The matrix <span class="math inline">\(\bar{\boldsymbol A}\)</span> is a central representation, <span class="math inline">\(h\)</span> measures representation heterogeneity, and <span class="math inline">\(\epsilon\)</span> is the proportion of unrelated or contaminated tasks. Thus, the model encodes similarity as a continuum: <span class="math inline">\(h=0\)</span> gives exact sharing, while <span class="math inline">\(h&gt;0\)</span> allows task-specific deviations; tasks in <span class="math inline">\(\mathcal S^c\)</span> need not follow the low-dimensional structure at all.</p>
-<p>This answers the first challenge at the structural level. We share a low-dimensional subspace across informative tasks, not the complete slope functions, and we explicitly leave room for both heterogeneity and contamination.</p>
+<p>This answers the first challenge at the structural level. We <strong>share a low-dimensional subspace across informative tasks</strong>, not the complete slope functions, and we explicitly leave room for both <strong>heterogeneity and contamination.</strong></p>
 </section>
 <section id="method" class="level2">
 <h2 class="anchored" data-anchor-id="method">Method</h2>
 <section id="reduce-the-infinite-dimension-while-preserving-functional-geometry" class="level3">
 <h3 class="anchored" data-anchor-id="reduce-the-infinite-dimension-while-preserving-functional-geometry">1. Reduce the infinite dimension while preserving functional geometry</h3>
 <p>Let <span class="math inline">\(\boldsymbol\psi_K(t)\)</span> be a shared B-spline basis and write a working slope function as</p>
-<p><span class="math display">\[
-\boldsymbol\beta_{\boldsymbol B}(t)
+<p><span class="math display">\[\boldsymbol\beta_{\boldsymbol B}(t)
 =
 \boldsymbol B\boldsymbol\psi_K(t),
-\qquad \boldsymbol B\in\mathbb R^{p\times K}.
-\]</span></p>
+\qquad \boldsymbol B\in\mathbb R^{p\times K}.\]</span></p>
 <p>With <span class="math inline">\(\boldsymbol Z_i^{(m)}=\int_{\mathcal T}\boldsymbol X_i^{(m)}(t)\boldsymbol\psi_K(t)^{\top}\,dt\)</span>, estimation becomes finite-dimensional through the penalized loss</p>
-<p><span class="math display">\[
-L_\eta^{(m)}(\boldsymbol B)
+<p><span class="math display">\[L_\eta^{(m)}(\boldsymbol B)
 =
 \frac{1}{2n}\sum_{i=1}^{n}
 \left\{Y_i^{(m)}-\langle\boldsymbol Z_i^{(m)},\boldsymbol B\rangle_{\mathrm F}\right\}^{2}
 +\frac{\eta}{2}\operatorname{tr}
-\left(\boldsymbol B\boldsymbol R_K\boldsymbol B^{\top}\right).
-\]</span></p>
-<p>The basis expansion makes computation tractable, while the roughness penalty stabilizes the original ill-posed problem. But the coefficient matrix alone does not describe whether two fitted functions behave similarly for prediction. We therefore measure discrepancy in the prediction–roughness geometry</p>
-<p><span class="math display">\[
-\|\boldsymbol\beta\|_{X^{(m)},\eta}^{2}
+\left(\boldsymbol B\boldsymbol R_K\boldsymbol B^{\top}\right).\]</span></p>
+<p>The basis expansion makes computation tractable, while the roughness penalty stabilizes the original ill-posed problem. But the coefficient matrix alone does not describe whether two fitted functions behave similarly for prediction. We therefore measure discrepancy in the <strong>prediction–roughness geometry</strong></p>
+<p><span class="math display">\[\|\boldsymbol\beta\|_{X^{(m)},\eta}^{2}
 =
 \|\boldsymbol\beta\|_{X^{(m)}}^{2}
-+\eta\|\boldsymbol\beta\|_{R}^{2},
-\]</span></p>
++\eta\|\boldsymbol\beta\|_{R}^{2},\]</span></p>
 <p>and use its empirical analogue <span class="math inline">\(\|\boldsymbol\beta_{\boldsymbol B}\|_{n,\eta}^{(m)}\)</span> in the algorithms. The prediction component depends on the covariance structure of the functional predictors; the roughness component suppresses unstable high-frequency directions.</p>
 <div id="fig-geometry" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Comparison of Euclidean coefficient geometry and prediction-roughness geometry for two equal-size perturbations.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -281,13 +269,12 @@ Figure&nbsp;1: Equal-size coefficient perturbations can produce very different p
 </figcaption>
 </figure>
 </div>
-<p>This geometry is the link between dimensionality reduction and the final statistical objective: we reduce to spline coefficients, but continue to compare functions according to their consequences for prediction and smoothness.</p>
+<p>This geometry is the <strong>link between dimensionality reduction and the final statistical objective</strong>: we reduce to spline coefficients, but continue to compare functions according to their consequences for prediction and smoothness.</p>
 </section>
 <section id="functional-penalized-empirical-risk-minimization" class="level3">
 <h3 class="anchored" data-anchor-id="functional-penalized-empirical-risk-minimization">2. Functional penalized empirical risk minimization</h3>
-<p>FpERM first learns all tasks jointly. Its penalty encourages each task-specific representation subspace to stay close to a common center while still allowing the subspaces to differ:</p>
-<p><span class="math display">\[
-\min_{\bar{\boldsymbol A},\{\boldsymbol A^{(m)},\boldsymbol\Theta^{(m)}\}}
+<p>FpERM first <strong>learns all tasks jointly</strong>. Its penalty encourages each task-specific representation subspace to stay close to a common center while still allowing the subspaces to differ:</p>
+<p><span class="math display">\[\min_{\bar{\boldsymbol A},\{\boldsymbol A^{(m)},\boldsymbol\Theta^{(m)}\}}
 \frac{1}{M}\sum_{m=1}^{M}
 \left[
 L_\eta^{(m)}\!\left(\boldsymbol A^{(m)}\boldsymbol\Theta^{(m)}\right)
@@ -296,11 +283,9 @@ L_\eta^{(m)}\!\left(\boldsymbol A^{(m)}\boldsymbol\Theta^{(m)}\right)
 \boldsymbol A^{(m)}\boldsymbol A^{(m)\top}
 -\bar{\boldsymbol A}\bar{\boldsymbol A}^{\top}
 \right\|_{\mathrm{op}}
-\right].
-\]</span></p>
-<p>This step produces a task-specific anchor <span class="math inline">\(\widetilde{\boldsymbol\beta}^{(m)}\)</span>. FpERM then performs a biased refitting using only task <span class="math inline">\(m\)</span>:</p>
-<p><span class="math display">\[
-\widehat{\boldsymbol B}_{J}^{(m)}
+\right].\]</span></p>
+<p>This step produces a task-specific anchor <span class="math inline">\(\widetilde{\boldsymbol\beta}^{(m)}\)</span>. FpERM then performs a <strong>biased refitting</strong> using only task <span class="math inline">\(m\)</span>:</p>
+<p><span class="math display">\[\widehat{\boldsymbol B}_{J}^{(m)}
 \in
 \arg\min_{\boldsymbol B}
 \left\{
@@ -309,23 +294,21 @@ L_\eta^{(m)}(\boldsymbol B)
 \left\|
 \boldsymbol\beta_{\boldsymbol B}-\widetilde{\boldsymbol\beta}^{(m)}
 \right\|_{n,\eta}^{(m)}
-\right\}.
-\]</span></p>
+\right\}.\]</span></p>
 <p>The joint step borrows information, but the refitting step allows the estimator to move away from the anchor when the task-specific data support that move. In this way, similarity is used as information rather than imposed as an exact constraint, and refitting guards against negative transfer.</p>
 </section>
 <section id="functional-spectral-aggregation" class="level3">
 <h3 class="anchored" data-anchor-id="functional-spectral-aggregation">3. Functional spectral aggregation</h3>
-<p>FSpectral provides a computationally simpler route to the same goal:</p>
+<p>To motivate the procedure, consider first the ideal case in which <span class="math inline">\(h=0\)</span> and <span class="math inline">\(\mathcal S=[M]\)</span>. In this case, all tasks share the same representation subspace. Since the representation matrices are identifiable only up to rotations, the task-specific rotations may be absorbed into the latent coefficient matrices, so that <span class="math inline">\(B_K^{*(m)} = \bar{ A}\Theta_K^{*(m)}, m\in[M]\)</span>. Consequently, <span class="math inline">\(\left[B_K^{*(1)},\ldots, B_K^{*(M)}\right]=\bar{ A}\left[\Theta_K^{*(1)},\ldots,\Theta_K^{*(M)}\right].\)</span> If the concatenated low-dimensional coefficient matrix on the right-hand side has rank <span class="math inline">\(r\)</span>, then the concatenated population coefficient matrix has rank <span class="math inline">\(r\)</span>, and its column space coincides with <span class="math inline">\(\operatorname{col}(\bar{ A})\)</span>. Hence, at the population level, the leading <span class="math inline">\(r\)</span> left singular vectors of the concatenated coefficient matrix recover the central representation subspace. FSpectral provides a computationally simpler route to the same goal:</p>
 <ol type="1">
-<li>fit a penalized functional pilot estimator separately for each task;</li>
-<li>rescale each pilot using the empirical temporal Gram matrix, reducing the influence of weakly observed temporal directions;</li>
-<li>truncate unusually large standardized pilot blocks so that a few outlier tasks cannot dominate the aggregation;</li>
-<li>concatenate the blocks and use the leading <span class="math inline">\(r\)</span> left singular vectors to estimate the central representation subspace;</li>
-<li>refit each task within that subspace, then apply the same task-specific prediction–roughness refitting used by FpERM.</li>
+<li><p>fit a penalized functional pilot estimator separately for each task;</p></li>
+<li><p>rescale each pilot using the empirical temporal Gram matrix, reducing the influence of weakly observed temporal directions;</p></li>
+<li><p>truncate unusually large standardized pilot blocks so that a few outlier tasks cannot dominate the aggregation;</p></li>
+<li><p>concatenate the blocks and use the leading <span class="math inline">\(r\)</span> left singular vectors to estimate the central representation subspace;</p></li>
+<li><p>refit each task within that subspace, then apply the same task-specific prediction–roughness refitting used by FpERM.</p></li>
 </ol>
 <p>The sequence can be summarized as</p>
-<p><span class="math display">\[
-\text{taskwise pilots}
+<p><span class="math display">\[\text{taskwise pilots}
 \;\longrightarrow\;
 \text{temporal rescaling}
 \;\longrightarrow\;
@@ -333,26 +316,21 @@ L_\eta^{(m)}(\boldsymbol B)
 \;\longrightarrow\;
 \text{SVD}
 \;\longrightarrow\;
-\text{task-specific refitting}.
-\]</span></p>
+\text{task-specific refitting}.\]</span></p>
 <p>Temporal rescaling answers the functional-geometry problem, truncation protects the shared representation from unusually large outlier tasks, and the final refitting supplies the same protection against negative transfer. The trade-off is that FSpectral requires an upper bound <span class="math inline">\(\bar\epsilon\)</span> on the contamination proportion to choose its truncation level.</p>
 </section>
 </section>
 <section id="theory" class="level2">
 <h2 class="anchored" data-anchor-id="theory">Theory</h2>
 <p>The functional predictors do not have the same geometry as an ordinary finite-dimensional design. We therefore first characterize the approximation and stochastic geometry generated jointly by the functional covariance and the roughness penalty. After an appropriate task-specific change of temporal coordinates, the prediction form becomes Euclidean and the roughness penalty is diagonal with weights <span class="math inline">\(\gamma_k^{(m)}\)</span>; this leads to the effective temporal dimension</p>
-<p><span class="math display">\[
-d_K^{(m)}(\eta)
+<p><span class="math display">\[d_K^{(m)}(\eta)
 =
-\sum_{k=1}^{K}\frac{1}{1+\eta\gamma_k^{(m)}},
-\]</span></p>
+\sum_{k=1}^{K}\frac{1}{1+\eta\gamma_k^{(m)}},\]</span></p>
 <p>which counts the temporal directions that remain effectively active after regularization. This tool lets us compare empirical and population prediction–roughness geometry and replace the nominal basis dimension <span class="math inline">\(K\)</span> by an effective complexity <span class="math inline">\(d_K(\eta)\)</span>.</p>
 <p>The resulting prediction-error bounds separate cross-task representation estimation, estimation within the learned <span class="math inline">\(r\)</span>-dimensional space, spline approximation, representation heterogeneity <span class="math inline">\(h\)</span>, and contamination <span class="math inline">\(\epsilon\)</span>. For both estimators, the bound has the schematic form</p>
-<p><span class="math display">\[
-\text{multi-task rate}\bigl(M,r,d_K(\eta),h,\epsilon\bigr)
+<p><span class="math display">\[\text{multi-task rate}\bigl(M,r,d_K(\eta),h,\epsilon\bigr)
 \;\wedge\;
-\text{single-task rate}\bigl(p,d_K(\eta)\bigr).
-\]</span></p>
+\text{single-task rate}\bigl(p,d_K(\eta)\bigr).\]</span></p>
 <p>The first branch becomes smaller when more informative tasks are available and the intrinsic dimension <span class="math inline">\(r\)</span> is much smaller than <span class="math inline">\(p\)</span>; the terms involving <span class="math inline">\(h\)</span> and <span class="math inline">\(\epsilon\)</span> quantify when this benefit is weakened. The second branch formalizes the safe-net supplied by task-specific refitting. FSpectral has a sharper dependence on <span class="math inline">\(r\)</span>, whereas FpERM has the stronger robustness guarantee against task contamination.</p>
 </section>
 <section id="experiment" class="level2">
