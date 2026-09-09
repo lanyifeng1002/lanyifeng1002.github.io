@@ -151,18 +151,24 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
-  <li><a href="#main-contributions" id="toc-main-contributions" class="nav-link" data-scroll-target="#main-contributions">Main contributions</a></li>
-  <li><a href="#problem-setup" id="toc-problem-setup" class="nav-link" data-scroll-target="#problem-setup">Problem setup</a></li>
-  <li><a href="#proposed-methods" id="toc-proposed-methods" class="nav-link" data-scroll-target="#proposed-methods">Proposed methods</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#challenge" id="toc-challenge" class="nav-link" data-scroll-target="#challenge">Challenge</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">Model</a></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a>
   <ul class="collapse">
-  <li><a href="#functional-penalized-empirical-risk-minimization" id="toc-functional-penalized-empirical-risk-minimization" class="nav-link" data-scroll-target="#functional-penalized-empirical-risk-minimization">Functional penalized empirical risk minimization</a></li>
-  <li><a href="#functional-spectral-method" id="toc-functional-spectral-method" class="nav-link" data-scroll-target="#functional-spectral-method">Functional spectral method</a></li>
+  <li><a href="#reduce-the-infinite-dimension-while-preserving-functional-geometry" id="toc-reduce-the-infinite-dimension-while-preserving-functional-geometry" class="nav-link" data-scroll-target="#reduce-the-infinite-dimension-while-preserving-functional-geometry">1. Reduce the infinite dimension while preserving functional geometry</a></li>
+  <li><a href="#functional-penalized-empirical-risk-minimization" id="toc-functional-penalized-empirical-risk-minimization" class="nav-link" data-scroll-target="#functional-penalized-empirical-risk-minimization">2. Functional penalized empirical risk minimization</a></li>
+  <li><a href="#functional-spectral-aggregation" id="toc-functional-spectral-aggregation" class="nav-link" data-scroll-target="#functional-spectral-aggregation">3. Functional spectral aggregation</a></li>
   </ul></li>
-  <li><a href="#numerical-evidence" id="toc-numerical-evidence" class="nav-link" data-scroll-target="#numerical-evidence">Numerical evidence</a></li>
-  <li><a href="#real-data-analysis" id="toc-real-data-analysis" class="nav-link" data-scroll-target="#real-data-analysis">Real data analysis</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory">Theory</a></li>
+  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment">Experiment</a>
+  <ul class="collapse">
+  <li><a href="#representation-heterogeneity-h" id="toc-representation-heterogeneity-h" class="nav-link" data-scroll-target="#representation-heterogeneity-h">Representation heterogeneity (h)</a></li>
+  <li><a href="#contamination-proportion-epsilon" id="toc-contamination-proportion-epsilon" class="nav-link" data-scroll-target="#contamination-proportion-epsilon">Contamination proportion <span class="math inline">\(\epsilon\)</span></a></li>
+  <li><a href="#number-of-tasks-m" id="toc-number-of-tasks-m" class="nav-link" data-scroll-target="#number-of-tasks-m">Number of tasks <span class="math inline">\(M\)</span></a></li>
+  <li><a href="#empirical-validation" id="toc-empirical-validation" class="nav-link" data-scroll-target="#empirical-validation">Empirical validation</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   </ul>
 </nav>
     </div>
@@ -188,32 +194,31 @@ window.Quarto = {
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>We study multi-task scalar-on-multiple-function-regression in which several related regression tasks are available, but their underlying structures need not be identical. Within each informative task, the vector of slope functions is assumed to admit a low dimensional representation, while these representations are allowed to vary around a common subspace and a fraction of tasks may be unrelated. We develop two estimation procedures based respectively on penalized empirical risk minimization and robust spectral aggregation. Both procedures combine representation learning across tasks with task specific refitting, with discrepancies measured through a geometry that incorporates the covariance structure of the functional predictors and smoothness regularization.</p>
-<p>We establish prediction error bounds that separate the contributions of functional complexity, representation heterogeneity, task contamination, and information shared across tasks. The resulting bounds show that borrowing information across tasks improves on separate functional regression when the informative representations are sufficiently similar and contamination is limited, while the refitting step retains the single task rate when such sharing is not beneficial. The spectral procedure achieves a sharper dependence on the intrinsic representation dimension, whereas the penalized procedure is more robust to task contamination.</p>
-</section>
 <section id="motivation" class="level2">
 <h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
-<p>Consider a regional air-quality monitoring network in which each station records daily trajectories of pollutants and meteorological variables, such as PM2.5 and temperature. A typical goal is to predict a scalar outcome, for example the next-day pollution level or a health-risk measure, from these functional covariates. Each station then gives a scalar-on-multiple-function regression problem. Stations in the same region are related through common atmospheric transport and emission patterns, but their regression relationships may differ because of local traffic, geography, industrial activity, and meteorological conditions.</p>
-<p>In all these examples, data are collected from several related populations, sites, or subjects, while each regression task itself involves multiple functional predictors. Estimating the tasks separately ignores potentially useful shared information, whereas pooling them into a single model ignores task-specific differences. This raises a basic question: how can information across related regression tasks improve the estimation of multiple functional effects without forcing the tasks to be the same?</p>
+<p>Consider a wearable device that records daily curves such as heart rate, blood pressure, and activity intensity; the same data structure appears when a monitoring station records pollutant trajectories or a laboratory measures multiple chemical spectra. Treating these observations as functions preserves temporal or spectral structure that isolated measurements discard. Because a single site, population, or laboratory often has limited samples, a natural research goal is to build a model with multiple functional covariates and use valid information from related source tasks to improve prediction.</p>
 </section>
-<section id="main-contributions" class="level2">
-<h2 class="anchored" data-anchor-id="main-contributions">Main contributions</h2>
-<p>To address these issues, we make three main contributions. First, we formulate a multi-task scalar-on-multiple-function regression model in which the multiple slope functions within each task admit a low-dimensional representation. These representations are allowed to be similar rather than identical across informative tasks, while a fraction of tasks may be unrelated or contaminated.</p>
-<p>Second, we develop two estimators based on penalized empirical risk minimization and robust spectral aggregation. Both methods combine representation learning with task-specific refitting, while accounting for the regularization and prediction structure of functional regression. Third, we establish prediction error bounds that characterize the effects of functional complexity, representation heterogeneity, task contamination, and cross-task information. The theory identifies regimes in which multi-task learning improves upon separate taskwise estimation while retaining a safe-net guarantee.</p>
+<section id="challenge" class="level2">
+<h2 class="anchored" data-anchor-id="challenge">Challenge</h2>
+<p>This goal brings several challenges. Functional predictors are smooth objects, so functional regression is an ill-posed infinite-dimensional estimation problem. At the same time, information from multiple sources is not uniformly useful: heterogeneous tasks can cause negative transfer.</p>
+<ul>
+<li><p><strong>Model the shared structure without making all tasks identical.</strong> We need a representation that captures how tasks are related while retaining task-specific variation.</p></li>
+<li><p><strong>Reduce the infinite dimension in the right geometry.</strong> A finite basis is needed for computation, but the reduction must balance smoothness with prediction accuracy rather than merely compare coefficient vectors.</p></li>
+<li><p><strong>Transfer information safely.</strong> The estimation procedure must exploit informative tasks and still protect a target task when the learned common structure is inaccurate or contaminated by unrelated tasks.</p></li>
+</ul>
+<p>The model, method, and theory below are organized as direct answers to these three challenges.</p>
 </section>
-<section id="problem-setup" class="level2">
-<h2 class="anchored" data-anchor-id="problem-setup">Problem setup</h2>
-<p>Consider (M) independent regression tasks. The (m)-th task consists of (n_m) independent observations. The functional linear model for the (m)-th task is written as</p>
+<section id="model" class="level2">
+<h2 class="anchored" data-anchor-id="model">Model</h2>
+<p>Consider (M) independent regression tasks. For simplicity, let each task contain (n) observations. The scalar-on-multiple-function model for task (m) is</p>
 <p><span class="math display">\[
 Y_i^{(m)}
 =
 \sum_{j=1}^{p}\int_{\mathcal T}X_{ij}^{(m)}(t)\beta_j^{*(m)}(t)\,dt
 +\varepsilon_i^{(m)},
-\qquad i\in[n].
+\qquad i\in[n],\quad m\in[M].
 \]</span></p>
-<p>We assume that the (p) slope functions are linearly spanned by (r) latent slope functions with (rp). Specifically,</p>
+<p>The (p) slope functions are assumed to be linearly spanned by (rp) latent slope functions:</p>
 <p><span class="math display">\[
 \boldsymbol\beta^{*(m)}(t)
 =
@@ -221,8 +226,8 @@ Y_i^{(m)}
 \qquad
 \boldsymbol A^{*(m)}\in\mathbb O_{p\times r}.
 \]</span></p>
-<p>The matrix (A^{<em>(m)}) characterizes the low-dimensional representation of task (m) along the coordinate directions of observed functions, while (^{</em>(m)}) captures the temporal variation pattern of this task in the latent representation space. The matrix (A^{*(m)}) itself is not uniquely identifiable; the identifiable quantity is its column space, or equivalently the projection matrix.</p>
-<p>Let (S) denote the unknown set of informative tasks. The representations ({A^{*(m)}}_{mS}) are assumed to be similar to one another. We assume that there exists (h) such that</p>
+<p>Here, <span class="math inline">\(\boldsymbol A^{*(m)}\)</span> characterizes the low-dimensional representation along the coordinates of the observed functions, while <span class="math inline">\(\boldsymbol\alpha^{*(m)}(t)\)</span> captures temporal variation in the latent representation space. Because <span class="math inline">\(\boldsymbol A^{*(m)}\)</span> is identifiable only up to rotation, the meaningful object is its column space, or equivalently the projector <span class="math inline">\(\boldsymbol A^{*(m)}\boldsymbol A^{*(m)\top}\)</span>.</p>
+<p>Let <span class="math inline">\(\mathcal S\subseteq[M]\)</span> be the unknown set of informative tasks. Their representations are similar, rather than necessarily identical, when</p>
 <p><span class="math display">\[
 \min_{\bar{\boldsymbol A}\in\mathbb O_{p\times r}}
 \max_{m\in\mathcal S}
@@ -231,39 +236,212 @@ Y_i^{(m)}
 -
 \bar{\boldsymbol A}\bar{\boldsymbol A}^{\top}
 \right\|_{\mathrm{op}}
-\le h.
+\le h,
+\qquad
+\epsilon=\frac{|\mathcal S^c|}{M}.
 \]</span></p>
-<p>The matrix ({A}) achieving the minimum can be understood as a “central representation”, and (h) is the similarity measure. A small (h) means the representations are more similar. The case when (h=0) reduces to the setting in which all informative tasks share exactly the same representation subspace.</p>
-<p>Tasks belonging to (S^c) are not required to satisfy the low-dimensional representation structure. More generally, we allow their data distributions to be arbitrary. Our statistical goal is to estimate ({^{*(m)}:m}) without prior knowledge of (S). When (h) and the contamination proportion are small, we borrow information across multiple tasks to improve estimation accuracy for informative tasks; meanwhile, the estimation maintains stability under substantial task heterogeneity.</p>
+<p>The matrix <span class="math inline">\(\bar{\boldsymbol A}\)</span> is a central representation, <span class="math inline">\(h\)</span> measures representation heterogeneity, and <span class="math inline">\(\epsilon\)</span> is the proportion of unrelated or contaminated tasks. Thus, the model encodes similarity as a continuum: <span class="math inline">\(h=0\)</span> gives exact sharing, while <span class="math inline">\(h&gt;0\)</span> allows task-specific deviations; tasks in <span class="math inline">\(\mathcal S^c\)</span> need not follow the low-dimensional structure at all.</p>
+<p>This answers the first challenge at the structural level. We share a low-dimensional subspace across informative tasks, not the complete slope functions, and we explicitly leave room for both heterogeneity and contamination.</p>
 </section>
-<section id="proposed-methods" class="level2">
-<h2 class="anchored" data-anchor-id="proposed-methods">Proposed methods</h2>
-<p>The first uses penalized empirical risk minimization to adaptively aggregate similar task representations while remaining robust to outlier tasks. The second uses robust spectral aggregation and is computationally more efficient.</p>
+<section id="method" class="level2">
+<h2 class="anchored" data-anchor-id="method">Method</h2>
+<section id="reduce-the-infinite-dimension-while-preserving-functional-geometry" class="level3">
+<h3 class="anchored" data-anchor-id="reduce-the-infinite-dimension-while-preserving-functional-geometry">1. Reduce the infinite dimension while preserving functional geometry</h3>
+<p>Let <span class="math inline">\(\boldsymbol\psi_K(t)\)</span> be a shared B-spline basis and write a working slope function as</p>
+<p><span class="math display">\[
+\boldsymbol\beta_{\boldsymbol B}(t)
+=
+\boldsymbol B\boldsymbol\psi_K(t),
+\qquad \boldsymbol B\in\mathbb R^{p\times K}.
+\]</span></p>
+<p>With <span class="math inline">\(\boldsymbol Z_i^{(m)}=\int_{\mathcal T}\boldsymbol X_i^{(m)}(t)\boldsymbol\psi_K(t)^{\top}\,dt\)</span>, estimation becomes finite-dimensional through the penalized loss</p>
+<p><span class="math display">\[
+L_\eta^{(m)}(\boldsymbol B)
+=
+\frac{1}{2n}\sum_{i=1}^{n}
+\left\{Y_i^{(m)}-\langle\boldsymbol Z_i^{(m)},\boldsymbol B\rangle_{\mathrm F}\right\}^{2}
++\frac{\eta}{2}\operatorname{tr}
+\left(\boldsymbol B\boldsymbol R_K\boldsymbol B^{\top}\right).
+\]</span></p>
+<p>The basis expansion makes computation tractable, while the roughness penalty stabilizes the original ill-posed problem. But the coefficient matrix alone does not describe whether two fitted functions behave similarly for prediction. We therefore measure discrepancy in the prediction–roughness geometry</p>
+<p><span class="math display">\[
+\|\boldsymbol\beta\|_{X^{(m)},\eta}^{2}
+=
+\|\boldsymbol\beta\|_{X^{(m)}}^{2}
++\eta\|\boldsymbol\beta\|_{R}^{2},
+\]</span></p>
+<p>and use its empirical analogue <span class="math inline">\(\|\boldsymbol\beta_{\boldsymbol B}\|_{n,\eta}^{(m)}\)</span> in the algorithms. The prediction component depends on the covariance structure of the functional predictors; the roughness component suppresses unstable high-frequency directions.</p>
+<div id="fig-geometry" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Comparison of Euclidean coefficient geometry and prediction-roughness geometry for two equal-size perturbations.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/prediction_roughness_geometry.png" class="img-fluid figure-img" style="width:100.0%" alt="Comparison of Euclidean coefficient geometry and prediction-roughness geometry for two equal-size perturbations.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Equal-size coefficient perturbations can produce very different prediction–roughness discrepancies. The higher-frequency perturbation has the same Euclidean coefficient distance but induces a rougher slope function.
+</figcaption>
+</figure>
+</div>
+<p>This geometry is the link between dimensionality reduction and the final statistical objective: we reduce to spline coefficients, but continue to compare functions according to their consequences for prediction and smoothness.</p>
+</section>
 <section id="functional-penalized-empirical-risk-minimization" class="level3">
-<h3 class="anchored" data-anchor-id="functional-penalized-empirical-risk-minimization">Functional penalized empirical risk minimization</h3>
-<p>In Algorithm 1, Step 1 aims to learn all tasks by aggregating the data. The penalty encourages the task-specific representation subspaces to stay close to a common center, while still allowing them to differ. This form of regularization also reduces the influence of a small number of outlier tasks on the learned central representation.</p>
-<p>To prevent negative transfer when the representation learned from multiple tasks is not sufficiently accurate for a particular task, Step 2 performs a task-specific biased refitting using the data from that task. This allows the estimator to move away from the Step 1 estimate when supported by the task-specific data, while retaining information learned across tasks otherwise. This refitting step therefore guards against negative transfer.</p>
+<h3 class="anchored" data-anchor-id="functional-penalized-empirical-risk-minimization">2. Functional penalized empirical risk minimization</h3>
+<p>FpERM first learns all tasks jointly. Its penalty encourages each task-specific representation subspace to stay close to a common center while still allowing the subspaces to differ:</p>
+<p><span class="math display">\[
+\min_{\bar{\boldsymbol A},\{\boldsymbol A^{(m)},\boldsymbol\Theta^{(m)}\}}
+\frac{1}{M}\sum_{m=1}^{M}
+\left[
+L_\eta^{(m)}\!\left(\boldsymbol A^{(m)}\boldsymbol\Theta^{(m)}\right)
++\frac{\lambda_A}{\sqrt n}
+\left\|
+\boldsymbol A^{(m)}\boldsymbol A^{(m)\top}
+-\bar{\boldsymbol A}\bar{\boldsymbol A}^{\top}
+\right\|_{\mathrm{op}}
+\right].
+\]</span></p>
+<p>This step produces a task-specific anchor <span class="math inline">\(\widetilde{\boldsymbol\beta}^{(m)}\)</span>. FpERM then performs a biased refitting using only task <span class="math inline">\(m\)</span>:</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol B}_{J}^{(m)}
+\in
+\arg\min_{\boldsymbol B}
+\left\{
+L_\eta^{(m)}(\boldsymbol B)
++\frac{\gamma_J}{\sqrt n}
+\left\|
+\boldsymbol\beta_{\boldsymbol B}-\widetilde{\boldsymbol\beta}^{(m)}
+\right\|_{n,\eta}^{(m)}
+\right\}.
+\]</span></p>
+<p>The joint step borrows information, but the refitting step allows the estimator to move away from the anchor when the task-specific data support that move. In this way, similarity is used as information rather than imposed as an exact constraint, and refitting guards against negative transfer.</p>
 </section>
-<section id="functional-spectral-method" class="level3">
-<h3 class="anchored" data-anchor-id="functional-spectral-method">Functional spectral method</h3>
-<p>We next propose a spectral procedure as a computationally simpler alternative to the joint penalized ERM in Algorithm 1. The basic idea is to first construct task-specific pilot estimators, robustly aggregate their low-dimensional representation information through singular value decomposition (SVD), and then perform task-specific refitting within the estimated representation subspace.</p>
-<p>Each task is first estimated separately using the penalized functional loss, and the resulting pilot is rescaled by the empirical temporal Gram matrix before truncation. The truncation then limits the influence of unusually large pilot blocks. Step 3 applies SVD to the concatenated blocks and uses the leading (r) left singular vectors to estimate the central representation subspace. Each task is then refitted within this subspace, followed by the final task-specific refitting step.</p>
+<section id="functional-spectral-aggregation" class="level3">
+<h3 class="anchored" data-anchor-id="functional-spectral-aggregation">3. Functional spectral aggregation</h3>
+<p>FSpectral provides a computationally simpler route to the same goal:</p>
+<ol type="1">
+<li>fit a penalized functional pilot estimator separately for each task;</li>
+<li>rescale each pilot using the empirical temporal Gram matrix, reducing the influence of weakly observed temporal directions;</li>
+<li>truncate unusually large standardized pilot blocks so that a few outlier tasks cannot dominate the aggregation;</li>
+<li>concatenate the blocks and use the leading <span class="math inline">\(r\)</span> left singular vectors to estimate the central representation subspace;</li>
+<li>refit each task within that subspace, then apply the same task-specific prediction–roughness refitting used by FpERM.</li>
+</ol>
+<p>The sequence can be summarized as</p>
+<p><span class="math display">\[
+\text{taskwise pilots}
+\;\longrightarrow\;
+\text{temporal rescaling}
+\;\longrightarrow\;
+\text{truncation}
+\;\longrightarrow\;
+\text{SVD}
+\;\longrightarrow\;
+\text{task-specific refitting}.
+\]</span></p>
+<p>Temporal rescaling answers the functional-geometry problem, truncation protects the shared representation from unusually large outlier tasks, and the final refitting supplies the same protection against negative transfer. The trade-off is that FSpectral requires an upper bound <span class="math inline">\(\bar\epsilon\)</span> on the contamination proportion to choose its truncation level.</p>
 </section>
 </section>
-<section id="numerical-evidence" class="level2">
-<h2 class="anchored" data-anchor-id="numerical-evidence">Numerical evidence</h2>
-<p>Hard-share performs well when (h) is small, but its prediction error increases rapidly as (h) grows. This reflects the cost of imposing an exact common representation when the task representations become different. In contrast, FpERM and FSpectral increase much more slowly and remain below the Single-task benchmark across the four settings. Overall, the results support the benefit of allowing similar representations while retaining task level adaptation.</p>
-<p>The prediction errors of Pooled and Hard-share increase substantially once unrelated tasks are introduced. In contrast, FpERM and FSpectral remain stable on the informative tasks and continue to improve over Single-task. They also remain close to Single-task on the contaminating tasks. This agrees with the role of the final refitting step, which limits negative transfer when a task does not conform to the learned common structure.</p>
-<p>Without contamination, increasing (M) improves the methods that learn a common representation. The pattern changes when 4% of the tasks are contaminated. Hard-share deteriorates as (M) increases because more outlier tasks enter the estimation of the common representation. In contrast, FpERM and FSpectral remain stable and their mean prediction errors continue to decrease. This shows that the proposed methods can benefit from additional related tasks without becoming increasingly sensitive to a small proportion of outliers.</p>
+<section id="theory" class="level2">
+<h2 class="anchored" data-anchor-id="theory">Theory</h2>
+<p>The functional predictors do not have the same geometry as an ordinary finite-dimensional design. We therefore first characterize the approximation and stochastic geometry generated jointly by the functional covariance and the roughness penalty. After an appropriate task-specific change of temporal coordinates, the prediction form becomes Euclidean and the roughness penalty is diagonal with weights <span class="math inline">\(\gamma_k^{(m)}\)</span>; this leads to the effective temporal dimension</p>
+<p><span class="math display">\[
+d_K^{(m)}(\eta)
+=
+\sum_{k=1}^{K}\frac{1}{1+\eta\gamma_k^{(m)}},
+\]</span></p>
+<p>which counts the temporal directions that remain effectively active after regularization. This tool lets us compare empirical and population prediction–roughness geometry and replace the nominal basis dimension <span class="math inline">\(K\)</span> by an effective complexity <span class="math inline">\(d_K(\eta)\)</span>.</p>
+<p>The resulting prediction-error bounds separate cross-task representation estimation, estimation within the learned <span class="math inline">\(r\)</span>-dimensional space, spline approximation, representation heterogeneity <span class="math inline">\(h\)</span>, and contamination <span class="math inline">\(\epsilon\)</span>. For both estimators, the bound has the schematic form</p>
+<p><span class="math display">\[
+\text{multi-task rate}\bigl(M,r,d_K(\eta),h,\epsilon\bigr)
+\;\wedge\;
+\text{single-task rate}\bigl(p,d_K(\eta)\bigr).
+\]</span></p>
+<p>The first branch becomes smaller when more informative tasks are available and the intrinsic dimension <span class="math inline">\(r\)</span> is much smaller than <span class="math inline">\(p\)</span>; the terms involving <span class="math inline">\(h\)</span> and <span class="math inline">\(\epsilon\)</span> quantify when this benefit is weakened. The second branch formalizes the safe-net supplied by task-specific refitting. FSpectral has a sharper dependence on <span class="math inline">\(r\)</span>, whereas FpERM has the stronger robustness guarantee against task contamination.</p>
 </section>
-<section id="real-data-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="real-data-analysis">Real data analysis</h2>
-<p>We apply FpERM and FSpectral to the Beijing Multi Site Air Quality data set. The 12 monitoring stations and four seasons define (M=48) tasks. For each station and day, the response is the daily mean PM2.5 concentration. The functional predictors are the 24 hourly measurements of PM10, SO2, NO2, CO, O3, temperature, pressure, dew point, rain, and wind speed.</p>
-<p>Relative to Single, FpERM reduces the average task RMSE by 45.0% when (r=2) and by 51.3% when (r=3). Paired block bootstrap intervals for the FpERM improvement over Single exclude zero at both ranks. The analysis therefore provides empirical evidence that representation sharing can improve functional prediction when each task has a limited sample size. It also shows that the comparison between exact and approximate sharing can depend on the representation rank.</p>
+<section id="experiment" class="level2">
+<h2 class="anchored" data-anchor-id="experiment">Experiment</h2>
+<p>The experiments follow the same decomposition as the theory. Rather than only reporting that the proposed methods work, each experiment varies one quantity that controls whether sharing should help: <span class="math inline">\(h\)</span>, <span class="math inline">\(\epsilon\)</span>, or <span class="math inline">\(M\)</span>.</p>
+<section id="representation-heterogeneity-h" class="level3">
+<h3 class="anchored" data-anchor-id="representation-heterogeneity-h">Representation heterogeneity (h)</h3>
+<p>With no contamination, <span class="math inline">\(h\)</span> varies from 0 to 0.8. Hard-share performs well when <span class="math inline">\(h\)</span> is small, but its prediction error increases rapidly as <span class="math inline">\(h\)</span> grows because its exact common-representation assumption becomes wrong. FpERM and FSpectral increase much more slowly and remain below the Single-task benchmark across the four settings, supporting the decision to model representations as similar rather than identical.</p>
+<div id="fig-h" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four-panel line chart comparing five methods as representation heterogeneity h increases.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-h-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/heterogeneity_h.png" class="img-fluid figure-img" style="width:100.0%" alt="Four-panel line chart comparing five methods as representation heterogeneity h increases.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-h-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Maximum population prediction error as representation heterogeneity increases across four simulation settings.
+</figcaption>
+</figure>
+</div>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>We studied multi-task scalar-on-multiple-function regression under a similar representation structure, allowing informative tasks to have related but not identical representations and permitting task contamination. We proposed two methods based on penalized empirical risk minimization and spectral aggregation, both followed by task-specific refitting. The theoretical results characterize the effects of functional complexity, representation heterogeneity, contamination, and cross-task information, and show when multi-task learning can improve over separate taskwise estimation while retaining a safe-net guarantee.</p>
+<section id="contamination-proportion-epsilon" class="level3">
+<h3 class="anchored" data-anchor-id="contamination-proportion-epsilon">Contamination proportion <span class="math inline">\(\epsilon\)</span></h3>
+<p>Next, <span class="math inline">\(h=0.1\)</span> is fixed and unrelated tasks are introduced. Pooled and Hard-share deteriorate substantially because outlier tasks distort the shared fit. In contrast, FpERM and FSpectral remain stable on informative tasks and stay close to Single-task on contaminating tasks, matching the intended role of truncation and task-specific refitting. The closer comparison also shows FpERM remaining more stable than FSpectral in the harder setting, consistent with its stronger theoretical contamination guarantee.</p>
+<div id="fig-epsilon" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four-panel line chart comparing five methods on informative and contaminating tasks as epsilon increases.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-epsilon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/contamination_epsilon.png" class="img-fluid figure-img" style="width:100.0%" alt="Four-panel line chart comparing five methods on informative and contaminating tasks as epsilon increases.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-epsilon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Prediction errors on informative and contaminating tasks as the contamination proportion increases.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="number-of-tasks-m" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-tasks-m">Number of tasks <span class="math inline">\(M\)</span></h3>
+<p>Finally, <span class="math inline">\(M\)</span> varies from 10 to 100. Without contamination, adding tasks improves the methods that learn a common representation. With <span class="math inline">\(\epsilon=0.04\)</span>, Hard-share deteriorates as more outliers enter its common representation, while FpERM and FSpectral remain stable in maximum error and continue to improve in mean error. More tasks are therefore useful only when the aggregation mechanism can distinguish shared signal from heterogeneous sources.</p>
+<div id="fig-M" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four-panel line chart comparing five methods as the number of tasks M increases under clean and contaminated settings.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-M-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/number_of_tasks_M.png" class="img-fluid figure-img" style="width:100.0%" alt="Four-panel line chart comparing five methods as the number of tasks M increases under clean and contaminated settings.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-M-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Maximum and mean population prediction errors as the number of tasks increases, with and without contamination.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="empirical-validation" class="level3">
+<h3 class="anchored" data-anchor-id="empirical-validation">Empirical validation</h3>
+<p>We apply the methods to the Beijing Multi-Site Air Quality data set. The 12 monitoring stations and four seasons define <span class="math inline">\(M=48\)</span> tasks; the response is daily mean PM2.5, and the functional predictors are 24-hour curves of PM10, SO2, NO2, CO, O3, temperature, pressure, dew point, rain, and wind speed. This setting mirrors the motivation: each task has limited observations, but the monitoring sites may share related functional effects.</p>
+<table class="caption-top table">
+<caption>Average task RMSE for daily mean PM2.5.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(r\)</span></th>
+<th style="text-align: right;">Single</th>
+<th style="text-align: right;">Pooled</th>
+<th style="text-align: right;">Hard-share</th>
+<th style="text-align: right;">FSpectral</th>
+<th style="text-align: right;">FpERM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">32.39</td>
+<td style="text-align: right;">24.57</td>
+<td style="text-align: right;"><strong>15.38</strong></td>
+<td style="text-align: right;">28.23</td>
+<td style="text-align: right;">17.81</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">32.39</td>
+<td style="text-align: right;">24.57</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">30.66</td>
+<td style="text-align: right;"><strong>15.76</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Relative to Single, FpERM reduces average task RMSE by 45.0% when <span class="math inline">\(r=2\)</span> and 51.3% when <span class="math inline">\(r=3\)</span>; paired calendar-block bootstrap intervals for these improvements exclude zero. Hard-share is best at <span class="math inline">\(r=2\)</span>, whereas FpERM is best at <span class="math inline">\(r=3\)</span>, showing that the value of exact versus approximate sharing can depend on the representation dimension. This empirical example supports the usefulness of representation sharing, but it does not by itself test contamination robustness; that claim is evaluated by the theory and controlled simulations above.</p>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>The main lesson is not simply that more tasks produce better estimates. The problem is to decide <strong>what</strong> should be shared, <strong>how much</strong> it should be shared, and <strong>how</strong> a task can recover when the shared information is wrong.</p>
+<p>First, the shareable object is a low-dimensional representation subspace rather than the complete slope function. Measuring similarity between projectors makes that object identifiable and turns exact sharing into the special case <span class="math inline">\(h=0\)</span>. Second, functional reduction cannot be separated from functional geometry: spline coefficients make the problem finite, but covariance and roughness determine which coefficient errors matter for prediction. Third, transfer and protection must be designed together. FpERM and FSpectral learn across tasks, while task-specific refitting gives each task a principled route back toward its own data.</p>
+<p>The two procedures emphasize different priorities. FSpectral is computationally simpler and achieves a sharper dependence on the intrinsic representation dimension; FpERM is more robust to task contamination. Across both methods, the full reasoning chain is the same: represent shared structure without enforcing identity, regularize in the geometry of the functional problem, isolate the failure modes through <span class="math inline">\(h\)</span>, <span class="math inline">\(\epsilon\)</span>, and <span class="math inline">\(M\)</span>, and retain a single-task safe-net when transfer is not beneficial.</p>
 
 
 </section>
