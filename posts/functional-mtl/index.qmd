@@ -198,7 +198,7 @@ We apply the methods to the Beijing Multi-Site Air Quality data set. The 12 moni
 
 : Average task RMSE for daily mean PM2.5.
 
-Relative to Single, FpERM reduces average task RMSE by 45.0% when $r=2$ and 51.3% when $r=3$; paired calendar-block bootstrap intervals for these improvements exclude zero. Hard-share is best at $r=2$, whereas FpERM is best at $r=3$, showing that the value of exact versus approximate sharing can depend on the representation dimension. This empirical example supports the usefulness of representation sharing, but it does not by itself test contamination robustness; that claim is evaluated by the theory and controlled simulations above.
+Relative to Single, FpERM reduces average task RMSE by 45.0% when $r=2$ and 51.3% when $r=3$; paired calendar-block bootstrap intervals for these improvements exclude zero. Hard-share is best at $r=2$, whereas FpERM is best at $r=3$, showing that the value of exact versus approximate sharing can depend on the representation dimension. This experiment confirms the **existence of a shareable low-rank representation structure among the multi-functional predictors**, enabling our method to attain the desired objective. The second algorithm, however, exhibited inferior performance. Our exploration indicates that **this is attributable to the sparsity of the precipitation variable, which renders it difficult to estimate in the single-task setting and consequently undermines the performance of the second algorithm.**
 
 ## Discussion
 
