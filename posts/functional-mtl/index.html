@@ -194,13 +194,14 @@ window.Quarto = {
 </header>
 
 
+<p><em>This research note provides an accessible overview of an ongoing research project. A manuscript based on this work has been submitted for publication.</em></p>
 <section id="motivation" class="level2">
 <h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
 <p>Consider a wearable device that records daily curves such as heart rate, blood pressure, and activity intensity; the same data structure appears when a monitoring station records pollutant trajectories or a laboratory measures multiple chemical spectra. Treating these observations as functions preserves temporal or spectral structure that isolated measurements discard. Because a single site, population, or laboratory often has limited samples, a natural research goal is to build a model with multiple functional covariates and use valid information from related source tasks to improve prediction.</p>
 </section>
 <section id="challenge" class="level2">
 <h2 class="anchored" data-anchor-id="challenge">Challenge</h2>
-<p>This goal brings several challenges. Functional predictors are smooth objects, so functional regression is an ill-posed infinite-dimensional estimation problem. At the same time, information from multiple sources is not uniformly useful: heterogeneous tasks can cause negative transfer.</p>
+<p>This goal brings several challenges. Functional predictors live in infinite-dimensional spaces, and estimation is typically ill-posed because their covariance operators have increasingly weak directions. Smoothness regularization is therefore needed to stabilize estimation. At the same time, information from multiple sources is not uniformly useful: heterogeneous tasks can cause negative transfer.</p>
 <ul>
 <li><p><strong>Model the shared structure without making all tasks identical.</strong> We need a representation that captures how tasks are related while retaining task-specific variation.</p></li>
 <li><p><strong>Reduce the infinite dimension in the right geometry.</strong> A finite basis is needed for computation, but the reduction must balance smoothness with prediction accuracy rather than merely compare coefficient vectors.</p></li>
@@ -234,7 +235,7 @@ window.Quarto = {
 \le h,
 \qquad
 \epsilon=\frac{|\mathcal S^c|}{M}.\]</span></p>
-<p>The matrix <span class="math inline">\(\bar{\boldsymbol A}\)</span> is a central representation, <span class="math inline">\(h\)</span> measures representation heterogeneity, and <span class="math inline">\(\epsilon\)</span> is the proportion of unrelated or contaminated tasks. Thus, the model encodes similarity as a continuum: <span class="math inline">\(h=0\)</span> gives exact sharing, while <span class="math inline">\(h&gt;0\)</span> allows task-specific deviations; tasks in <span class="math inline">\(\mathcal S^c\)</span> need not follow the low-dimensional structure at all.</p>
+<p>The matrix <span class="math inline">\(\bar{\boldsymbol A}\)</span> is a central representation, <span class="math inline">\(h\)</span> measures representation heterogeneity, and <span class="math inline">\(\epsilon\)</span> is the proportion of unrelated or contaminated tasks. Thus, the model encodes similarity as a continuum: <span class="math inline">\(h=0\)</span> gives exact sharing, while <span class="math inline">\(h&gt;0\)</span> allows task-specific deviations; tasks in <span class="math inline">\(\mathcal S^c\)</span> may not follow the low-dimensional structure at all.</p>
 <p>This answers the first challenge at the structural level. We <strong>share a low-dimensional subspace across informative tasks</strong>, not the complete slope functions, and we explicitly leave room for both <strong>heterogeneity and contamination.</strong></p>
 </section>
 <section id="method" class="level2">
@@ -245,8 +246,7 @@ window.Quarto = {
 <p><span class="math display">\[\boldsymbol\beta_{\boldsymbol B}(t)
 =
 \boldsymbol B\boldsymbol\psi_K(t),
-\qquad \boldsymbol B\in\mathbb R^{p\times K}.\]</span></p>
-<p>With <span class="math inline">\(\boldsymbol Z_i^{(m)}=\int_{\mathcal T}\boldsymbol X_i^{(m)}(t)\boldsymbol\psi_K(t)^{\top}\,dt\)</span>, estimation becomes finite-dimensional through the penalized loss</p>
+\qquad \boldsymbol B\in\mathbb R^{p\times K}.\]</span> Under the low-dimensional representation introduced above, expanding the latent slope functions in the same basis as <span class="math inline">\(\boldsymbol\alpha^{(m)}(t)=\boldsymbol\Theta^{(m)}\boldsymbol\psi_K(t)\)</span> gives <span class="math inline">\(\boldsymbol B^{(m)}=\boldsymbol A^{(m)}\boldsymbol\Theta^{(m)}\)</span>. Thus, after basis reduction, the low-dimensional representation structure is inherited directly by the finite-dimensional coefficient matrix. With <span class="math inline">\(\boldsymbol Z_i^{(m)}=\int_{\mathcal T}\boldsymbol X_i^{(m)}(t)\boldsymbol\psi_K(t)^{\top}\,dt\)</span>, estimation becomes finite-dimensional through the penalized loss</p>
 <p><span class="math display">\[L_\eta^{(m)}(\boldsymbol B)
 =
 \frac{1}{2n}\sum_{i=1}^{n}
@@ -413,6 +413,50 @@ Figure&nbsp;4: Maximum and mean population prediction errors as the number of ta
 </tbody>
 </table>
 <p>Relative to Single, FpERM reduces average task RMSE by 45.0% when <span class="math inline">\(r=2\)</span> and 51.3% when <span class="math inline">\(r=3\)</span>; paired calendar-block bootstrap intervals for these improvements exclude zero. Hard-share is best at <span class="math inline">\(r=2\)</span>, whereas FpERM is best at <span class="math inline">\(r=3\)</span>, showing that the value of exact versus approximate sharing can depend on the representation dimension. This experiment confirms the <strong>existence of a shareable low-rank representation structure among the multi-functional predictors</strong>, enabling our method to attain the desired objective. The second algorithm, however, exhibited inferior performance. Our exploration indicates that <strong>this is attributable to the sparsity of the precipitation variable, which renders it difficult to estimate in the single-task setting and consequently undermines the performance of the second algorithm.</strong></p>
+<section id="expanded-sample-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="expanded-sample-analysis">Expanded-sample analysis</h4>
+<p>We then increased the amount of historical data available for model development. The 2013–2014 meteorological years were used for training, 2015 for validation, and 2016 was held out for testing. After tuning, each method was refitted on the combined 2013–2015 data; all preprocessing and parameter selection were completed without using the 2016 test observations. Validation selected a common cubic B-spline basis dimension of <span class="math inline">\(K=12\)</span>.</p>
+<table class="caption-top table">
+<caption>Average task RMSE on the 2016 test period, with 95% intervals from 2,000 paired seven-day moving-block bootstrap samples.</caption>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 23%">
+<col style="width: 21%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(r\)</span></th>
+<th style="text-align: right;">Single</th>
+<th style="text-align: right;">Pooled</th>
+<th style="text-align: right;">Hard-share</th>
+<th style="text-align: right;">FSpectral</th>
+<th style="text-align: right;">FpERM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">18.343<br><small>(16.174–19.683)</small></td>
+<td style="text-align: right;">21.379<br><small>(18.029–23.241)</small></td>
+<td style="text-align: right;">17.918<br><small>(15.579–19.684)</small></td>
+<td style="text-align: right;"><strong>16.918</strong><br><small><strong>(14.918–18.473)</strong></small></td>
+<td style="text-align: right;">18.004<br><small>(15.529–19.858)</small></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">18.343<br><small>(16.174–19.683)</small></td>
+<td style="text-align: right;">21.379<br><small>(18.029–23.241)</small></td>
+<td style="text-align: right;">17.606<br><small>(15.245–19.190)</small></td>
+<td style="text-align: right;"><strong>17.355</strong><br><small><strong>(15.325–18.870)</strong></small></td>
+<td style="text-align: right;">17.893<br><small>(15.568–19.547)</small></td>
+</tr>
+</tbody>
+</table>
+<p>With the larger model-development sample, FSpectral achieves the lowest average task RMSE at both ranks. Relative to Single-task, its RMSE decreases by 7.8% for <span class="math inline">\(r=2\)</span> and 5.4% for <span class="math inline">\(r=3\)</span>. Hard-share also improves on Single-task, whereas Pooled performs considerably worse, indicating useful shared low-dimensional structure across tasks but not identical coefficient functions. FpERM gives smaller improvements of 1.9% and 2.5%. Compared with the earlier limited-sample analysis, this pattern is consistent with FSpectral’s reliance on sufficiently accurate taskwise pilot estimators: additional historical observations can stabilize the pilots used in spectral aggregation.</p>
+</section>
 </section>
 </section>
 <section id="discussion" class="level2">
