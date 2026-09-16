@@ -9,32 +9,16 @@ toc: false
 
 *Sept. 2024–Present*
 
-**Contribution.** This research studies how to share information across functional regression tasks with multiple functional predictors, model their task-specific coefficient functions through similar low-rank representations, while accounting for the covariance and smoothness geometry intrinsic to functional regression in estimation and refitting. This leads to a functional multi-task learning framework with theoretical guarantees, validated through simulations and real-data analysis.
+**Abstract.** We study scalar-on-multiple-function regression with several related regression tasks whose underlying representations may not be identical. Within each informative task, the vector of slope functions is assumed to admit a low-dimensional representation, with task-specific representation subspaces remaining close to a common subspace, while a fraction of tasks may be unrelated. We develop two estimation procedures based on penalized empirical risk minimization and robust spectral aggregation, respectively. Both procedures learn representations across tasks and then perform task-specific refitting. The refitting step measures deviations in a prediction–roughness geometry that reflects the functional design and smoothness regularization. We establish upper bounds on prediction error that characterize when cross-task information improves estimation and how task-specific refitting guards against negative transfer. Simulation studies evaluate the finite-sample performance of the proposed methods, followed by an application to multi-site air-quality data.
 
-**Outcome.** Manuscript in preparation.
+**Status.** Manuscript submitted.
 
-### Improving the Quality and Flavor of Radish Paocai through Mixed-Strain Fermentation
+### Microsimulation and Cost-Effectiveness Analysis of AI-Assisted HPB Cancer Screening
 
-*Dec. 2020–Jun. 2023*
+*Dec. 2024– May. 2026*
 
-**Contribution.** Curated and analyzed multi-dimensional fermentation datasets, integrating physicochemical, amino-acid, organic-acid, volatile-compound, texture, and sensory measurements to compare fermentation conditions and characterize changes in product quality and flavor.
+**Research Summary.** Developed an individual-level lifecycle microsimulation model to evaluate the long-term cost-effectiveness of the HOPE three-tier AI-assisted cancer screening strategy compared with standard clinical care. The model integrates disease progression, repeated screening, cancer detection, treatment, mortality, healthcare costs, and quality-adjusted life years (QALYs). Base-case, probabilistic, and one-way sensitivity analyses were conducted to assess cost-effectiveness and quantify uncertainty in model assumptions and input parameters.
 
-**Outcome.** Second-author article published in *Journal of Food Science* (2025).
+**Role.** Research Collaborator.
 
-## Selected Projects
-
-### Cross-Domain Bearing Fault Diagnosis via Transfer Learning
-
-*2025*
-
-**Contribution.** Developed a cross-domain fault-diagnosis framework for transferring knowledge from labeled laboratory bearing data to scarce, unlabeled real-train data; constructed an MMD-based CNN domain-adaptation model to align source and target feature distributions and evaluated transfer performance through cross-validation and classification diagnostics.
-
-**Outcome.** National Second Prize, China Postgraduate Mathematical Contest in Modeling.
-
-### Promotion Effect Evaluation and Resource Reallocation under Periodic Demand Fluctuations
-
-*2026*
-
-**Contribution.** Analyzed promotional effectiveness under periodic consumption fluctuations on an instant-retail platform and developed a data-driven framework for evaluating promotion outcomes and reallocating limited marketing resources across customer or demand segments.
-
-**Outcome.** Outstanding Project Award (50/2000+), 6th Meituan Business Analytics Competition.
+**Status.** Manuscript in preparation.

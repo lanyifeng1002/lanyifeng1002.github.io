@@ -3,15 +3,14 @@ title: "Yifeng Lan"
 toc: false
 ---
 
-I am a graduate student in statistics with research interests in statistical machine learning, multi-task and transfer learning, representation learning, and functional data analysis.
+I am a graduate student in Applied Statistics at Qingdao University. My research interests lie in statistical machine learning, with a particular focus on functional data analysis and transfer learning.
 
-My current research focuses on statistical methodology for learning from heterogeneous and related data sources, with particular interests in representation learning, functional data, and robust knowledge transfer.
+My current research focuses on statistical methodology for learning from heterogeneous and related data sources. I document my research and related methodological ideas in my blog, with concise project summaries available on the Research page.
 
 ## Research Interests
 
 - Statistical Machine Learning
 - Multi-task and Transfer Learning
-- Representation Learning
 - Functional and High-dimensional Data Analysis
 - Statistical Foundations of Modern AI
 
