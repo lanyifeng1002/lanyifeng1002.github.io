@@ -15,7 +15,7 @@ toc: false
 
 ### Microsimulation and Cost-Effectiveness Analysis of AI-Assisted HPB Cancer Screening
 
-*Dec. 2024– May. 2026*
+*Dec. 2025– May 2026*
 
 **Research Summary.** Developed an individual-level lifecycle microsimulation model to evaluate the long-term cost-effectiveness of the HOPE three-tier AI-assisted cancer screening strategy compared with standard clinical care. The model integrates disease progression, repeated screening, cancer detection, treatment, mortality, healthcare costs, and quality-adjusted life years (QALYs). Base-case, probabilistic, and one-way sensitivity analyses were conducted to assess cost-effectiveness and quantify uncertainty in model assumptions and input parameters.
 

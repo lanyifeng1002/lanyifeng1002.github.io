@@ -67,12 +67,7 @@ Let $\boldsymbol\psi_K(t)$ be a shared B-spline basis and write a working slope 
 $$\boldsymbol\beta_{\boldsymbol B}(t)
 =
 \boldsymbol B\boldsymbol\psi_K(t),
-\qquad \boldsymbol B\in\mathbb R^{p\times K}.$$
-Under the low-dimensional representation introduced above, expanding the latent slope functions in the same basis as
-$\boldsymbol\alpha^{(m)}(t)=\boldsymbol\Theta^{(m)}\boldsymbol\psi_K(t)$
-gives $\boldsymbol B^{(m)}=\boldsymbol A^{(m)}\boldsymbol\Theta^{(m)}$.
-Thus, after basis reduction, the low-dimensional representation structure is inherited directly by the finite-dimensional coefficient matrix.
-With $\boldsymbol Z_i^{(m)}=\int_{\mathcal T}\boldsymbol X_i^{(m)}(t)\boldsymbol\psi_K(t)^{\top}\,dt$, estimation becomes finite-dimensional through the penalized loss
+\qquad \boldsymbol B\in\mathbb R^{p\times K}.$$ Under the low-dimensional representation introduced above, expanding the latent slope functions in the same basis as $\boldsymbol\alpha^{(m)}(t)=\boldsymbol\Theta^{(m)}\boldsymbol\psi_K(t)$ gives $\boldsymbol B^{(m)}=\boldsymbol A^{(m)}\boldsymbol\Theta^{(m)}$. Thus, after basis reduction, the low-dimensional representation structure is inherited directly by the finite-dimensional coefficient matrix. With $\boldsymbol Z_i^{(m)}=\int_{\mathcal T}\boldsymbol X_i^{(m)}(t)\boldsymbol\psi_K(t)^{\top}\,dt$, estimation becomes finite-dimensional through the penalized loss
 
 $$L_\eta^{(m)}(\boldsymbol B)
 =
@@ -210,7 +205,7 @@ Relative to Single, FpERM reduces average task RMSE by 45.0% when $r=2$ and 51.3
 We then increased the amount of historical data available for model development. The 2013–2014 meteorological years were used for training, 2015 for validation, and 2016 was held out for testing. After tuning, each method was refitted on the combined 2013–2015 data; all preprocessing and parameter selection were completed without using the 2016 test observations. Validation selected a common cubic B-spline basis dimension of $K=12$.
 
 | $r$ | Single | Pooled | Hard-share | FSpectral | FpERM |
-|----:|-------:|-------:|-----------:|----------:|------:|
+|---:|---:|---:|---:|---:|---:|
 | 2 | 18.343<br><small>(16.174–19.683)</small> | 21.379<br><small>(18.029–23.241)</small> | 17.918<br><small>(15.579–19.684)</small> | **16.918**<br><small>**(14.918–18.473)**</small> | 18.004<br><small>(15.529–19.858)</small> |
 | 3 | 18.343<br><small>(16.174–19.683)</small> | 21.379<br><small>(18.029–23.241)</small> | 17.606<br><small>(15.245–19.190)</small> | **17.355**<br><small>**(15.325–18.870)**</small> | 17.893<br><small>(15.568–19.547)</small> |
 
