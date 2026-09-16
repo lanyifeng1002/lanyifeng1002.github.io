@@ -3,13 +3,15 @@ title: "Functional Multi-Task Learning with Similar Representations"
 toc: true
 ---
 
+*This research note provides an accessible overview of an ongoing research project. A manuscript based on this work has been submitted for publication.*
+
 ## Motivation
 
 Consider a wearable device that records daily curves such as heart rate, blood pressure, and activity intensity; the same data structure appears when a monitoring station records pollutant trajectories or a laboratory measures multiple chemical spectra. Treating these observations as functions preserves temporal or spectral structure that isolated measurements discard. Because a single site, population, or laboratory often has limited samples, a natural research goal is to build a model with multiple functional covariates and use valid information from related source tasks to improve prediction.
 
 ## Challenge
 
-This goal brings several challenges. Functional predictors are smooth objects, so functional regression is an ill-posed infinite-dimensional estimation problem. At the same time, information from multiple sources is not uniformly useful: heterogeneous tasks can cause negative transfer.
+This goal brings several challenges. Functional predictors live in infinite-dimensional spaces, and estimation is typically ill-posed because their covariance operators have increasingly weak directions. Smoothness regularization is therefore needed to stabilize estimation. At the same time, information from multiple sources is not uniformly useful: heterogeneous tasks can cause negative transfer.
 
 - **Model the shared structure without making all tasks identical.** We need a representation that captures how tasks are related while retaining task-specific variation.
 
@@ -52,7 +54,7 @@ $$\min_{\bar{\boldsymbol A}\in\mathbb O^{p\times r}}
 \qquad
 \epsilon=\frac{|\mathcal S^c|}{M}.$$
 
-The matrix $\bar{\boldsymbol A}$ is a central representation, $h$ measures representation heterogeneity, and $\epsilon$ is the proportion of unrelated or contaminated tasks. Thus, the model encodes similarity as a continuum: $h=0$ gives exact sharing, while $h>0$ allows task-specific deviations; tasks in $\mathcal S^c$ need not follow the low-dimensional structure at all.
+The matrix $\bar{\boldsymbol A}$ is a central representation, $h$ measures representation heterogeneity, and $\epsilon$ is the proportion of unrelated or contaminated tasks. Thus, the model encodes similarity as a continuum: $h=0$ gives exact sharing, while $h>0$ allows task-specific deviations; tasks in $\mathcal S^c$ may not follow the low-dimensional structure at all.
 
 This answers the first challenge at the structural level. We **share a low-dimensional subspace across informative tasks**, not the complete slope functions, and we explicitly leave room for both **heterogeneity and contamination.**
 
@@ -66,7 +68,10 @@ $$\boldsymbol\beta_{\boldsymbol B}(t)
 =
 \boldsymbol B\boldsymbol\psi_K(t),
 \qquad \boldsymbol B\in\mathbb R^{p\times K}.$$
-
+Under the low-dimensional representation introduced above, expanding the latent slope functions in the same basis as
+$\boldsymbol\alpha^{(m)}(t)=\boldsymbol\Theta^{(m)}\boldsymbol\psi_K(t)$
+gives $\boldsymbol B^{(m)}=\boldsymbol A^{(m)}\boldsymbol\Theta^{(m)}$.
+Thus, after basis reduction, the low-dimensional representation structure is inherited directly by the finite-dimensional coefficient matrix.
 With $\boldsymbol Z_i^{(m)}=\int_{\mathcal T}\boldsymbol X_i^{(m)}(t)\boldsymbol\psi_K(t)^{\top}\,dt$, estimation becomes finite-dimensional through the penalized loss
 
 $$L_\eta^{(m)}(\boldsymbol B)
@@ -199,6 +204,19 @@ We apply the methods to the Beijing Multi-Site Air Quality data set. The 12 moni
 : Average task RMSE for daily mean PM2.5.
 
 Relative to Single, FpERM reduces average task RMSE by 45.0% when $r=2$ and 51.3% when $r=3$; paired calendar-block bootstrap intervals for these improvements exclude zero. Hard-share is best at $r=2$, whereas FpERM is best at $r=3$, showing that the value of exact versus approximate sharing can depend on the representation dimension. This experiment confirms the **existence of a shareable low-rank representation structure among the multi-functional predictors**, enabling our method to attain the desired objective. The second algorithm, however, exhibited inferior performance. Our exploration indicates that **this is attributable to the sparsity of the precipitation variable, which renders it difficult to estimate in the single-task setting and consequently undermines the performance of the second algorithm.**
+
+#### Expanded-sample analysis
+
+We then increased the amount of historical data available for model development. The 2013–2014 meteorological years were used for training, 2015 for validation, and 2016 was held out for testing. After tuning, each method was refitted on the combined 2013–2015 data; all preprocessing and parameter selection were completed without using the 2016 test observations. Validation selected a common cubic B-spline basis dimension of $K=12$.
+
+| $r$ | Single | Pooled | Hard-share | FSpectral | FpERM |
+|----:|-------:|-------:|-----------:|----------:|------:|
+| 2 | 18.343<br><small>(16.174–19.683)</small> | 21.379<br><small>(18.029–23.241)</small> | 17.918<br><small>(15.579–19.684)</small> | **16.918**<br><small>**(14.918–18.473)**</small> | 18.004<br><small>(15.529–19.858)</small> |
+| 3 | 18.343<br><small>(16.174–19.683)</small> | 21.379<br><small>(18.029–23.241)</small> | 17.606<br><small>(15.245–19.190)</small> | **17.355**<br><small>**(15.325–18.870)**</small> | 17.893<br><small>(15.568–19.547)</small> |
+
+: Average task RMSE on the 2016 test period, with 95% intervals from 2,000 paired seven-day moving-block bootstrap samples.
+
+With the larger model-development sample, FSpectral achieves the lowest average task RMSE at both ranks. Relative to Single-task, its RMSE decreases by 7.8% for $r=2$ and 5.4% for $r=3$. Hard-share also improves on Single-task, whereas Pooled performs considerably worse, indicating useful shared low-dimensional structure across tasks but not identical coefficient functions. FpERM gives smaller improvements of 1.9% and 2.5%. Compared with the earlier limited-sample analysis, this pattern is consistent with FSpectral's reliance on sufficiently accurate taskwise pilot estimators: additional historical observations can stabilize the pilots used in spectral aggregation.
 
 ## Discussion
 
